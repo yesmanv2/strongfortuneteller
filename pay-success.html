@@ -1,0 +1,187 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>支付结果 · 五行紫微算命</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Noto+Serif+SC:wght@400;600;700&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+  <style>
+    :root {
+      --bg: #0e0e14;
+      --bg-alt: #161622;
+      --panel-bg: #13131f;
+      --border: #2a2a3d;
+      --text-primary: #e8e8f0;
+      --text-secondary: #a0a0b8;
+      --text-muted: #6a6a82;
+      --accent: #c4a35a;
+      --green: #4ec97a;
+      --serif: "Noto Serif SC", serif;
+      --sans: "Inter", "PingFang SC", sans-serif;
+    }
+    * { box-sizing: border-box; margin: 0; }
+    body {
+      font-family: var(--sans);
+      background: var(--bg);
+      color: var(--text-primary);
+      min-height: 100vh;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      padding: 24px;
+    }
+    .card {
+      max-width: 420px;
+      width: 100%;
+      background: var(--panel-bg);
+      border: 1px solid var(--border);
+      padding: 40px 32px;
+      text-align: center;
+    }
+    .icon {
+      width: 64px;
+      height: 64px;
+      margin: 0 auto 20px;
+      background: rgba(78,201,122,0.12);
+      border: 2px solid var(--green);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 1.8rem;
+    }
+    .icon.pending {
+      background: rgba(196,163,90,0.12);
+      border-color: var(--accent);
+    }
+    h1 {
+      font-family: var(--serif);
+      font-size: 1.3rem;
+      margin-bottom: 8px;
+    }
+    .desc {
+      color: var(--text-secondary);
+      font-size: 0.88rem;
+      line-height: 1.7;
+      margin-bottom: 24px;
+    }
+    .order-info {
+      background: var(--bg-alt);
+      border: 1px solid var(--border);
+      padding: 16px;
+      margin-bottom: 24px;
+      text-align: left;
+    }
+    .order-row {
+      display: flex;
+      justify-content: space-between;
+      padding: 6px 0;
+      font-size: 0.85rem;
+    }
+    .order-row .label { color: var(--text-muted); }
+    .order-row .value { color: var(--text-primary); font-weight: 600; }
+    .btn {
+      display: inline-block;
+      padding: 12px 32px;
+      background: var(--accent);
+      color: var(--bg);
+      font-weight: 700;
+      font-size: 0.9rem;
+      border: none;
+      cursor: pointer;
+      text-decoration: none;
+      letter-spacing: 0.04em;
+    }
+    .btn:hover { opacity: 0.85; }
+    .btn-secondary {
+      background: transparent;
+      color: var(--text-muted);
+      border: 1px solid var(--border);
+      margin-left: 12px;
+    }
+    .btn-secondary:hover { color: var(--accent); border-color: var(--accent); }
+    #status-text { color: var(--green); font-weight: 700; }
+    #status-text.pending { color: var(--accent); }
+  </style>
+</head>
+<body>
+  <div class="card">
+    <div class="icon" id="status-icon">★</div>
+    <h1 id="title">支付处理中...</h1>
+    <p class="desc" id="desc">正在确认支付结果，请稍候...</p>
+    <div class="order-info" id="order-info" style="display:none">
+      <div class="order-row">
+        <span class="label">订单号</span>
+        <span class="value" id="order-no">-</span>
+      </div>
+      <div class="order-row">
+        <span class="label">套餐</span>
+        <span class="value" id="order-plan">-</span>
+      </div>
+      <div class="order-row">
+        <span class="label">金额</span>
+        <span class="value" id="order-amount">-</span>
+      </div>
+      <div class="order-row">
+        <span class="label">状态</span>
+        <span class="value" id="status-text">确认中</span>
+      </div>
+    </div>
+    <div>
+      <a href="./index.html" class="btn">返回算命工具</a>
+    </div>
+  </div>
+
+  <script>
+    const PAY_API_BASE = "http://127.0.0.1:3000";
+
+    async function checkOrder() {
+      const orderNo = localStorage.getItem("fortune_last_order");
+      if (!orderNo) {
+        document.getElementById("title").textContent = "支付已完成";
+        document.getElementById("desc").textContent = "感谢你的支持！现在可以返回使用完整功能。";
+        return;
+      }
+
+      try {
+        const resp = await fetch(`${PAY_API_BASE}/api/pay/query?orderNo=${orderNo}`);
+        const result = await resp.json();
+        
+        const infoEl = document.getElementById("order-info");
+        infoEl.style.display = "block";
+        document.getElementById("order-no").textContent = orderNo;
+
+        if (result.success) {
+          const d = result.data;
+          document.getElementById("order-plan").textContent = d.plan === "single" ? "单次测算" : "年度会员";
+          document.getElementById("order-amount").textContent = `¥${d.amount}`;
+
+          if (d.status === "paid") {
+            document.getElementById("status-icon").textContent = "✓";
+            document.getElementById("title").textContent = "支付成功！";
+            document.getElementById("desc").textContent = "紫微斗数完整版已解锁，返回即可查看全部功能。";
+            document.getElementById("status-text").textContent = "已支付";
+            localStorage.setItem("fortune_vip", "true");
+            localStorage.setItem("fortune_vip_plan", d.plan);
+          } else {
+            document.getElementById("status-icon").classList.add("pending");
+            document.getElementById("status-icon").textContent = "⏳";
+            document.getElementById("title").textContent = "等待支付确认";
+            document.getElementById("desc").textContent = "支付宝正在处理中，稍后会自动更新状态。你也可以返回继续使用。";
+            document.getElementById("status-text").textContent = "处理中";
+            document.getElementById("status-text").classList.add("pending");
+            // 5秒后再查一次
+            setTimeout(checkOrder, 5000);
+          }
+        }
+      } catch (err) {
+        document.getElementById("title").textContent = "支付已提交";
+        document.getElementById("desc").textContent = "如已完成支付，功能将自动解锁。如有问题请联系客服。";
+      }
+    }
+
+    checkOrder();
+  </script>
+</body>
+</html>

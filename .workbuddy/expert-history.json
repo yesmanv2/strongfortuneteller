@@ -1,0 +1,17 @@
+{
+  "version": 2,
+  "sessions": {
+    "6a0c3bbf5a204a8bafee53f8a768eae3": [
+      {
+        "expertId": "VisualStorytellingExpert",
+        "name": "Eva",
+        "profession": "视觉叙事专家",
+        "avatarUrl": "https://acc-1258344699.cos.accelerate.myqcloud.com/workbuddy/experts/avatars/01-Design/VisualStorytellingExpert/VisualStorytellingExpert.png",
+        "promptUrl": "https://acc-1258344699.cos.accelerate.myqcloud.com/workbuddy/experts/experts/01-Design/VisualStorytellingExpert/VisualStorytellingExpert_zh.md",
+        "usedAt": 1774967585521,
+        "industryId": "all"
+      }
+    ]
+  },
+  "lastUpdated": 1774968190290
+}

@@ -1,0 +1,363 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, viewport-fit=cover" />
+    <meta name="apple-mobile-web-app-capable" content="yes" />
+    <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent" />
+    <meta name="format-detection" content="telephone=no" />
+    <title>五行紫微算命工具 · 深度版</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Noto+Serif+SC:wght@400;600;700&family=Inter:wght@400;500;600;700&display=swap"
+      rel="stylesheet"
+    />
+    <link rel="stylesheet" href="./styles.css" />
+  </head>
+  <body>
+    <div class="page-shell">
+      <header class="hero-card">
+        <div>
+          <p class="eyebrow">五行 · 八字 · 紫微 · 流年 · 深度测算</p>
+          <h1>五行紫微算命工具<span class="hero-version">深度版</span></h1>
+          <p class="hero-copy">
+            输入你的出生日期与时刻，生成四柱八字、紫微斗数命盘、纳音五行、十神关系、五行生克分析，
+            结合流年流月给出全方位运势指导与开运建议。
+          </p>
+        </div>
+        <div class="hero-badge-group">
+          <span class="hero-badge">四柱排盘</span>
+          <span class="hero-badge">纳音五行</span>
+          <span class="hero-badge">十神分析</span>
+          <span class="hero-badge">流年运势</span>
+          <span class="hero-badge">紫微斗数</span>
+          <span class="hero-badge">流月指导</span>
+          <span class="hero-badge">开运建议</span>
+          <span class="hero-badge">AI 问答</span>
+        </div>
+      </header>
+      <p class="copyright-text">版权所有：城中村分析师</p>
+
+      <main class="layout-grid">
+        <!-- 左侧输入面板 -->
+        <section class="panel form-panel">
+          <div class="panel-heading">
+            <div>
+              <p class="section-tag">输入信息</p>
+              <h2>开始测算</h2>
+            </div>
+            <button id="fill-demo" class="ghost-button" type="button">填入示例</button>
+          </div>
+
+          <form id="fortune-form" class="fortune-form">
+            <div class="input-row">
+              <label class="input-group">
+                <span>称呼</span>
+                <input id="name" name="name" type="text" maxlength="20" placeholder="例如：小满" />
+              </label>
+              <label class="input-group">
+                <span>性别</span>
+                <select id="gender" name="gender" required>
+                  <option value="male">男</option>
+                  <option value="female">女</option>
+                </select>
+              </label>
+            </div>
+
+            <div class="input-row">
+              <label class="input-group">
+                <span>出生日期</span>
+                <input id="birth-date" name="birthDate" type="date" required />
+              </label>
+              <label class="input-group">
+                <span>出生时刻</span>
+                <input id="birth-time" name="birthTime" type="time" value="12:00" required />
+              </label>
+            </div>
+
+            <label class="input-group">
+              <span>出生地</span>
+              <input id="birthplace" name="birthplace" type="text" maxlength="30" placeholder="例如：北京、广州、成都" />
+            </label>
+
+            <label class="input-group">
+              <span>重点关注</span>
+              <select id="focus" name="focus">
+                <option value="overall">综合运势</option>
+                <option value="career">事业发展</option>
+                <option value="love">情感关系</option>
+                <option value="wealth">财运节奏</option>
+              </select>
+            </label>
+
+            <button class="primary-button" type="submit">开始深度测算</button>
+            <button class="vip-button" type="button" id="open-pay-btn">解锁紫微斗数完整版 · ¥1</button>
+          </form>
+
+          <div class="notice-card">
+            <p>
+              本工具使用公历日期、近似节气边界与传统五行映射做深度演算，
+              包含纳音、十神、流年流月、紫微斗数等维度，为您提供全方位命理分析。
+            </p>
+          </div>
+        </section>
+
+        <!-- 右侧结果面板 -->
+        <section class="panel result-panel" id="result-panel">
+          <div class="result-empty" id="empty-state">
+            <div class="empty-orb"></div>
+            <h2>你的命盘将在这里展开</h2>
+            <p>提交出生信息后，即可查看四柱八字、流年流月运势与开运指导。</p>
+          </div>
+
+          <div class="result-content hidden" id="result-content">
+            <!-- 总览 -->
+            <div class="summary-card">
+              <div>
+                <p class="section-tag">命盘总览</p>
+                <h2 id="summary-title">命盘总览</h2>
+                <p id="summary-copy"></p>
+              </div>
+              <div class="summary-meta">
+                <span id="dominant-pill" class="meta-pill"></span>
+                <span id="weak-pill" class="meta-pill subtle"></span>
+              </div>
+            </div>
+
+            <!-- 四柱排盘 -->
+            <section class="subsection">
+              <div class="subsection-heading">
+                <h3>四柱排盘</h3>
+                <p>年柱、月柱、日柱、时柱共同构成你的八字底图。</p>
+              </div>
+              <div id="pillar-grid" class="pillar-grid"></div>
+            </section>
+
+            <!-- 纳音五行 -->
+            <section class="subsection">
+              <div class="subsection-heading">
+                <h3>纳音五行</h3>
+                <p>纳音是干支组合的深层五行属性，揭示更精微的命理特质。</p>
+              </div>
+              <div id="nayin-section"></div>
+            </section>
+
+            <!-- 五行分布 -->
+            <section class="subsection">
+              <div class="subsection-heading">
+                <h3>五行分布</h3>
+                <p>八字中的天干与地支各计一份，共计 8 份能量。最旺 / 最弱</p>
+              </div>
+              <div id="element-bars" class="element-bars"></div>
+            </section>
+
+            <!-- 五行生克 -->
+            <section class="subsection">
+              <div class="subsection-heading">
+                <h3>五行生克关系</h3>
+                <p>以日主五行为中心，分析与其他五行的生克互动。</p>
+              </div>
+              <div id="wuxing-relation-section"></div>
+            </section>
+
+            <!-- 十神分析 -->
+            <section class="subsection">
+              <div class="subsection-heading">
+                <h3>十神分析</h3>
+                <p>以日干为主体，分析其他天干与日干的十神关系，揭示命局深层结构。</p>
+              </div>
+              <div id="tengod-section"></div>
+            </section>
+
+            <!-- 出生地风水 -->
+            <section class="subsection hidden" id="birthplace-section-wrap">
+              <div class="subsection-heading">
+                <h3>出生地风水分析</h3>
+                <p>结合出生地的地理五行属性，分析地域对命格的加持与调和作用。</p>
+              </div>
+              <div id="birthplace-section"></div>
+            </section>
+
+            <!-- 紫微斗数 -->
+            <section class="subsection">
+              <div class="subsection-heading">
+                <h3>紫微斗数命盘</h3>
+                <p>根据出生时辰排列紫微星系十二宫位，揭示一生格局与际遇。</p>
+              </div>
+              <div id="ziwei-section"></div>
+            </section>
+
+            <!-- 性格 & 调和 -->
+            <section class="insight-grid">
+              <article class="insight-card">
+                <p class="section-tag">性格气质</p>
+                <h3 id="personality-title"></h3>
+                <p id="personality-copy"></p>
+              </article>
+              <article class="insight-card">
+                <p class="section-tag">调和方案</p>
+                <h3 id="balance-title"></h3>
+                <p id="balance-copy"></p>
+              </article>
+              <article class="insight-card wide">
+                <p class="section-tag">重点关注</p>
+                <h3 id="focus-title"></h3>
+                <p id="focus-copy"></p>
+              </article>
+            </section>
+
+            <!-- 流年运势 -->
+            <section class="subsection">
+              <div class="subsection-heading">
+                <h3>流年运势（2015-2030）</h3>
+                <p>结合你的日主五行与每年天干五行，查看 2015-2030 年的评分与运势走向。</p>
+              </div>
+              <div id="yearly-section"></div>
+            </section>
+
+            <!-- 流月运势 -->
+            <section class="subsection">
+              <div class="subsection-heading">
+                <h3>流月运势（本年12月）</h3>
+                <p>当年每月天干与你日主的十神关系，逐月给出行动指导。</p>
+              </div>
+              <div id="monthly-section"></div>
+            </section>
+
+            <!-- 开运指导 -->
+            <section class="subsection">
+              <div class="subsection-heading">
+                <h3>开运指导</h3>
+                <p>根据你的五行格局，从颜色、数字、方位、季节、事业、健康等维度给出建议。</p>
+              </div>
+              <div id="lucky-section"></div>
+            </section>
+
+
+
+            <!-- AI 问答对话模块（嵌入结果区域内） -->
+            <section class="subsection chat-section" id="chat-panel">
+              <div class="chat-section-heading">
+                <div>
+                  <p class="section-tag">AI 命理问答</p>
+                  <h3>有疑问？继续问</h3>
+                </div>
+                <button id="clear-chat" class="ghost-button" type="button">清空对话</button>
+              </div>
+              <p class="chat-desc">基于你的八字命盘，向 AI 提出更深入的问题，获得个性化的命理解读。</p>
+
+              <div class="chat-messages" id="chat-messages">
+                <div class="chat-welcome">
+                  <div class="chat-welcome-icon">—</div>
+                  <p>测算完成！你可以在这里提问，例如：</p>
+                  <div class="chat-suggestions" id="chat-suggestions">
+                    <button class="chat-suggest-btn" type="button">我今年的事业运势怎么样？</button>
+                    <button class="chat-suggest-btn" type="button">我的财运什么时候最好？</button>
+                    <button class="chat-suggest-btn" type="button">我适合做什么行业？</button>
+                    <button class="chat-suggest-btn" type="button">我和哪种五行的人最配？</button>
+                  </div>
+                </div>
+              </div>
+
+              <form class="chat-input-area" id="chat-form">
+                <input type="text" id="chat-input" class="chat-input" placeholder="输入你的命理问题..." autocomplete="off" />
+                <button type="submit" class="chat-send-btn" id="chat-send-btn">
+                  <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="22" y1="2" x2="11" y2="13"/><polygon points="22 2 15 22 11 13 2 9 22 2"/></svg>
+                </button>
+              </form>
+            </section>
+
+          </div>
+        </section>
+      </main>
+    </div>
+
+    <!-- 首页占卜区域 -->
+    <section class="home-divination" id="home-divination">
+      <div class="home-div-header">
+        <h2>每日占卜</h2>
+        <p>无需测算，直接抽签占卜。如已完成深度测算，将结合你的八字五行进行解读。</p>
+      </div>
+
+      <div class="home-div-grid">
+        <!-- 每日运势签 -->
+        <div class="home-div-card fortune-theme">
+          <div class="home-div-card-head">
+            <h3>每日运势签</h3>
+            <p>心诚则灵，每日抽取专属运势签文</p>
+          </div>
+          <div class="divination-draw-area">
+            <div class="fortune-stick-container" id="fortune-stick-container">
+              <div class="fortune-stick-tube">
+                <div class="fortune-sticks">签</div>
+              </div>
+            </div>
+            <button class="divination-btn" id="draw-fortune-btn" type="button">摇签求签</button>
+          </div>
+          <div class="divination-result hidden" id="daily-fortune-result"></div>
+        </div>
+
+        <!-- 塔罗牌占卜 -->
+        <div class="home-div-card tarot-theme">
+          <div class="home-div-card-head">
+            <h3>塔罗牌占卜</h3>
+            <p>三张牌揭示过去、现在与未来</p>
+          </div>
+          <div class="divination-draw-area">
+            <div class="tarot-deck-display">
+              <div class="tarot-card-back">牌</div>
+              <div class="tarot-card-back">牌</div>
+              <div class="tarot-card-back">牌</div>
+            </div>
+            <button class="divination-btn tarot-btn" id="draw-tarot-btn" type="button">翻开命运之牌</button>
+          </div>
+          <div class="divination-result hidden" id="tarot-result"></div>
+        </div>
+      </div>
+
+      <p class="home-div-tip">完成上方「深度测算」后，占卜结果将融合你的八字五行，解读更精准。</p>
+    </section>
+
+    <!-- 支付弹窗 -->
+    <div class="pay-overlay hidden" id="pay-overlay">
+      <div class="pay-modal">
+        <button class="pay-close-btn" id="pay-close-btn">&times;</button>
+        <div class="pay-header">
+          <div class="pay-icon">★</div>
+          <h2>解锁完整紫微斗数命盘</h2>
+          <p>包含十二宫详解、四化飞星、大运流年全分析</p>
+        </div>
+        <div class="pay-plans">
+          <div class="pay-plan active" data-price="1">
+            <span class="pay-plan-tag">推荐</span>
+            <h3>单次测算</h3>
+            <div class="pay-price">¥<strong>1</strong></div>
+            <p>一次完整的紫微斗数命盘解析</p>
+          </div>
+          <div class="pay-plan" data-price="10">
+            <span class="pay-plan-tag hot">超值</span>
+            <h3>年度会员</h3>
+            <div class="pay-price">¥<strong>10</strong></div>
+            <p>全年无限次测算 + AI 深度问答</p>
+          </div>
+        </div>
+        <div class="pay-method">
+          <p class="pay-method-label">选择支付方式</p>
+          <div class="pay-method-options">
+            <button class="pay-method-btn active" data-method="alipay">
+              <svg width="24" height="24" viewBox="0 0 24 24" fill="none"><rect width="24" height="24" rx="6" fill="#1677FF"/><path d="M18.5 14.2c-1.2-.5-2.8-1.2-4.5-1.8.7-1.3 1.2-2.8 1.5-4.4h-3v-1.5h3.8V5.2h-3.8V3.5h-1.8v1.7H7v1.3h3.7v1.5H7.5v1.3h5.8c-.2 1.2-.7 2.3-1.2 3.2-2-.5-4.1-.8-5.1-.3-1.8.8-2.4 2.5-1.6 3.8.8 1.3 3 1.7 4.8.5.9-.6 1.7-1.5 2.3-2.7 1.8.7 3.4 1.3 4.6 1.8L18.5 14.2zM8 17.5c-1.2.5-2.5.2-2.9-.6-.4-.8.1-1.8 1.3-2.2.6-.2 1.5-.1 2.8.3C8.8 16.1 8.4 16.9 8 17.5z" fill="white"/></svg>
+              支付宝
+            </button>
+          </div>
+        </div>
+        <button class="pay-submit-btn" id="pay-submit-btn">
+          <span id="pay-btn-text">立即支付 ¥1</span>
+        </button>
+        <p class="pay-secure">安全支付 · 支付后即刻解锁</p>
+      </div>
+    </div>
+
+    <script src="./script.js?v=20260320_fix2"></script>
+  </body>
+</html>
