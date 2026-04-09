@@ -12,15 +12,18 @@ rm -rf dist
 mkdir -p dist
 
 # 混淆 JS（变量名替换 + 压缩 + 去注释）
-npx uglifyjs script.js -o dist/script.js \
+# 注意：不能用 -m toplevel，因为两个 JS 文件共享全局变量
+# 先合并两个 JS 文件，再一起混淆，保证变量名一致
+cat bazi-core.js script.js > dist/_combined.js
+npx uglifyjs dist/_combined.js -o dist/_combined.min.js \
   -c drop_console=false,passes=2 \
-  -m toplevel,reserved=['$','jQuery']
-echo "  ✅ script.js 已混淆"
+  -m reserved=['$','jQuery']
 
-npx uglifyjs bazi-core.js -o dist/bazi-core.js \
-  -c drop_console=false,passes=2 \
-  -m toplevel,reserved=['$','jQuery']
-echo "  ✅ bazi-core.js 已混淆"
+# HTML 中 bazi-core.js 先加载，所以合并后的代码放到 bazi-core.js
+cp dist/_combined.min.js dist/bazi-core.js
+echo "/* merged into bazi-core.js */" > dist/script.js
+rm -f dist/_combined.js dist/_combined.min.js
+echo "  ✅ JS 已合并混淆（bazi-core.js + script.js → script.js）"
 
 # 压缩 CSS
 npx cleancss -o dist/styles.css styles.css

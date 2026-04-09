@@ -350,7 +350,26 @@ const REGION_ELEMENT_MAP = {
   // 特别行政区/台湾
   香港: { element: "水", direction: "南方沿海", terrain: "半岛与岛屿", desc: "东方之珠，水气汇聚全球财运，金融中心", feature: "港岛水气，水金相生，利金融贸易", advice: "香港水气旺财，极利国际金融和贸易" },
   澳门: { element: "水", direction: "南方沿海", terrain: "半岛", desc: "莲花宝地，水气灵秀，小而精致", feature: "莲城水韵，水火交映，利旅游博彩", advice: "澳门水气灵巧，适合旅游娱乐和服务业" },
+  // 台湾地区
   台北: { element: "水", direction: "东方沿海", terrain: "盆地", desc: "宝岛明珠，水木交融，科技文创发达", feature: "科技之都，水木相滋，利半导体文创", advice: "台北水木并旺，适合高科技和文化创意" },
+  新北: { element: "水", direction: "东方沿海", terrain: "丘陵与平原", desc: "环抱台北，水气丰沛，人口众多，商业繁荣", feature: "卫星城市，水土相生，利商贸服务", advice: "新北水气深厚，适合零售服务和中小企业" },
+  桃园: { element: "木", direction: "东方沿海", terrain: "台地", desc: "桃花源里，木气盎然，工业重镇，航空枢纽", feature: "航空门户，木火相生，利制造物流", advice: "桃园木气旺盛，适合制造业和物流产业" },
+  台中: { element: "火", direction: "东方沿海", terrain: "盆地", desc: "宝岛之心，火气温暖，文化气息浓厚，宜居之城", feature: "文化之都，火土相生，利文创设计", advice: "台中火气温润，适合文创产业和精密机械" },
+  台南: { element: "火", direction: "东方沿海", terrain: "平原", desc: "府城古韵，火气深厚，历史文化底蕴最深", feature: "古都文脉，火气绵长，利科技文教", advice: "台南火气悠远，适合半导体产业和文化旅游" },
+  高雄: { element: "火", direction: "东方沿海偏南", terrain: "平原与港口", desc: "港都雄风，火气炽烈，工业气息浓厚，阳刚大气", feature: "南方重镇，火金淬炼，利重工港运", advice: "高雄火气刚烈，适合重工业、港口贸易和造船" },
+  新竹: { element: "金", direction: "东方沿海", terrain: "丘陵", desc: "风城硅谷，金气凛冽，科技创新能量极强", feature: "科技重镇，金水相生，利半导体IC", advice: "新竹金气精锐，极利半导体和高科技研发" },
+  基隆: { element: "水", direction: "东方沿海", terrain: "港口丘陵", desc: "雨都港城，水气充沛，港口要塞", feature: "雨港水韵，水气旺盛，利航运贸易", advice: "基隆水气浓郁，适合港口物流和海洋产业" },
+  嘉义: { element: "木", direction: "东方沿海", terrain: "平原与山地", desc: "阿里山下，木气清新，农业与观光并重", feature: "山城木韵，木火相生，利农业观光", advice: "嘉义木气清幽，适合农业加工和生态旅游" },
+  花莲: { element: "木", direction: "东方沿海", terrain: "纵谷与海岸", desc: "后山净土，木水交融，自然灵气充沛", feature: "山海灵秀，木水相涵，利观光疗愈", advice: "花莲木气灵动，适合观光旅游和身心灵产业" },
+  台东: { element: "木", direction: "东方沿海", terrain: "纵谷", desc: "宝岛后花园，木气天然，质朴原始", feature: "自然净土，木气纯粹，利有机农业", advice: "台东木气纯净，适合有机农业和深度旅游" },
+  屏东: { element: "火", direction: "东方沿海偏南", terrain: "平原", desc: "国境之南，火气炽热，热带风情浓厚", feature: "南国热情，火水交融，利农渔观光", advice: "屏东火气热烈，适合热带农业和海洋观光" },
+  宜兰: { element: "水", direction: "东方沿海", terrain: "平原", desc: "兰阳平原，水气氤氲，温泉之乡", feature: "水乡灵气，水木相生，利温泉观光", advice: "宜兰水气滋润，适合观光休闲和有机农业" },
+  苗栗: { element: "木", direction: "东方沿海", terrain: "丘陵", desc: "山城客乡，木气蕴秀，客家文化深厚", feature: "客家山城，木土相融，利农业文化", advice: "苗栗木气淳朴，适合特色农业和客家文创" },
+  彰化: { element: "土", direction: "东方沿海", terrain: "平原", desc: "半线古城，土气丰饶，传统产业根基深", feature: "沃野平原，土金相生，利传统制造", advice: "彰化土气厚实，适合传统制造业和农业" },
+  南投: { element: "木", direction: "东方内陆", terrain: "山地", desc: "台湾唯一不靠海的县，木气深幽，山林灵秀", feature: "山中秘境，木水相养，利茶业观光", advice: "南投木气幽深，适合茶产业和山林观光" },
+  云林: { element: "土", direction: "东方沿海", terrain: "平原", desc: "农业大县，土气浑厚，朴实勤劳", feature: "粮仓沃土，土气深厚，利农业加工", advice: "云林土气浓郁，适合农业深加工和食品产业" },
+  澎湖: { element: "水", direction: "东方海上", terrain: "群岛", desc: "菊岛风光，水气包围，海洋气息浓郁", feature: "海岛水韵，水火交映，利渔业观光", advice: "澎湖水气环绕，适合海洋旅游和渔业" },
+  金门: { element: "金", direction: "东方海上", terrain: "岛屿", desc: "浯岛雄关，金气刚毅，战地风情独特", feature: "前线要塞，金水相生，利酒业文旅", advice: "金门金气凛然，适合酒业品牌和战地旅游" },
 };
 
 /* 模糊匹配出生地 */
