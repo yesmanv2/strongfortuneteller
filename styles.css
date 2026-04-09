@@ -1,9 +1,9 @@
 :root {
-  --bg: #0e0e14;
-  --bg-alt: #161622;
-  --panel-bg: #13131f;
-  --border: #2a2a3d;
-  --border-light: #1f1f30;
+  --bg: #0a0a12;
+  --bg-alt: #12121e;
+  --panel-bg: #0f0f1a;
+  --border: #1a1a35;
+  --border-light: #151530;
   --text-primary: #e8e8f0;
   --text-secondary: #a0a0b8;
   --text-muted: #6a6a82;
@@ -14,6 +14,14 @@
   --red: #e05252;
   --green: #4ec97a;
   --blue: #5a9fd4;
+  /* 赛博朋克霓虹色 */
+  --neon-blue: #00d4ff;
+  --neon-purple: #b24bf3;
+  --neon-pink: #ff2d7b;
+  --neon-glow-blue: rgba(0, 212, 255, 0.15);
+  --neon-glow-purple: rgba(178, 75, 243, 0.12);
+  --cyber-gradient: linear-gradient(135deg, #00d4ff, #b24bf3);
+  --cyber-gradient-dim: linear-gradient(135deg, rgba(0,212,255,0.08), rgba(178,75,243,0.06));
   --serif: "Noto Serif SC", "Source Han Serif SC", "STSong", "Songti SC", serif;
   --sans: "Inter", "PingFang SC", "SF Pro Text", "Microsoft YaHei", -apple-system, sans-serif;
   --mono: "SF Mono", "Fira Code", "JetBrains Mono", monospace;
@@ -33,6 +41,37 @@ body {
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
   text-rendering: optimizeLegibility;
+  position: relative;
+}
+
+/* 赛博朋克扫描线叠加 */
+body::after {
+  content: "";
+  position: fixed;
+  inset: 0;
+  pointer-events: none;
+  z-index: 9998;
+  background: repeating-linear-gradient(
+    0deg,
+    transparent,
+    transparent 2px,
+    rgba(0, 212, 255, 0.015) 2px,
+    rgba(0, 212, 255, 0.015) 4px
+  );
+  mix-blend-mode: screen;
+}
+
+/* 粒子背景 canvas */
+#cyber-particles {
+  position: fixed;
+  inset: 0;
+  z-index: 0;
+  pointer-events: none;
+}
+
+.page-shell, .home-divination, .pay-overlay {
+  position: relative;
+  z-index: 1;
 }
 
 button, input, select { font: inherit; color-scheme: dark; }
@@ -56,10 +95,11 @@ button, input, select { font: inherit; color-scheme: dark; }
   gap: 24px;
   align-items: flex-start;
   border: none;
-  border-bottom: 1px solid var(--border);
-  box-shadow: none;
+  border-bottom: 1px solid var(--neon-blue);
+  box-shadow: 0 1px 20px rgba(0, 212, 255, 0.1), inset 0 -1px 0 rgba(178, 75, 243, 0.15);
   backdrop-filter: none;
   border-radius: 0;
+  position: relative;
 }
 
 .hero-card h1 {
@@ -77,13 +117,14 @@ button, input, select { font: inherit; color-scheme: dark; }
   padding: 3px 10px;
   font-size: 0.65rem;
   border-radius: 2px;
-  background: var(--accent);
-  color: var(--bg);
+  background: var(--cyber-gradient);
+  color: #fff;
   vertical-align: middle;
   font-family: var(--sans);
   font-weight: 700;
   letter-spacing: 0.08em;
   text-transform: uppercase;
+  text-shadow: 0 0 8px rgba(0, 212, 255, 0.5);
 }
 
 .eyebrow, .section-tag {
@@ -96,9 +137,10 @@ button, input, select { font: inherit; color-scheme: dark; }
 }
 
 .hero-card .eyebrow {
-  color: var(--accent);
+  color: var(--neon-blue);
   margin-bottom: 10px;
   letter-spacing: 0.2em;
+  text-shadow: 0 0 12px rgba(0, 212, 255, 0.3);
 }
 
 .hero-copy {
@@ -133,14 +175,20 @@ button, input, select { font: inherit; color-scheme: dark; }
   align-items: center;
   padding: 4px 10px;
   border-radius: 2px;
-  border: 1px solid var(--border);
-  background: transparent;
-  color: var(--text-muted);
+  border: 1px solid rgba(0, 212, 255, 0.25);
+  background: rgba(0, 212, 255, 0.04);
+  color: var(--neon-blue);
   white-space: nowrap;
   font-size: 0.72rem;
   font-weight: 500;
   gap: 0;
   letter-spacing: 0.02em;
+  transition: border-color 0.3s, box-shadow 0.3s;
+}
+
+.hero-badge:hover {
+  border-color: var(--neon-blue);
+  box-shadow: 0 0 8px rgba(0, 212, 255, 0.2);
 }
 
 /* ===== 通用 pill / tag ===== */
@@ -176,8 +224,20 @@ button, input, select { font: inherit; color-scheme: dark; }
   background: var(--panel-bg);
   border-radius: 0;
   padding: 28px;
-  box-shadow: none;
+  box-shadow: 0 0 15px rgba(0, 212, 255, 0.03);
   backdrop-filter: none;
+  position: relative;
+}
+
+.panel::before {
+  content: "";
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  height: 1px;
+  background: linear-gradient(90deg, transparent, var(--neon-blue), var(--neon-purple), transparent);
+  opacity: 0.3;
 }
 
 .panel-heading {
@@ -187,7 +247,8 @@ button, input, select { font: inherit; color-scheme: dark; }
   align-items: flex-start;
   margin-bottom: 24px;
   padding-bottom: 16px;
-  border-bottom: 2px solid var(--accent);
+  border-bottom: 2px solid transparent;
+  border-image: linear-gradient(90deg, var(--neon-blue), var(--neon-purple)) 1;
 }
 
 .panel h2 {
@@ -258,8 +319,9 @@ button, input, select { font: inherit; color-scheme: dark; }
 }
 
 .ghost-button:hover {
-  border-color: var(--accent);
-  color: var(--accent);
+  border-color: var(--neon-blue);
+  color: var(--neon-blue);
+  box-shadow: 0 0 8px rgba(0, 212, 255, 0.12);
 }
 
 /* ===== 提示卡 ===== */
@@ -441,7 +503,8 @@ button, input, select { font: inherit; color-scheme: dark; }
   align-items: flex-start;
   margin-bottom: 16px;
   padding-bottom: 10px;
-  border-bottom: 1px solid var(--border);
+  border-bottom: 1px solid transparent;
+  border-image: linear-gradient(90deg, rgba(0,212,255,0.3), rgba(178,75,243,0.15), transparent) 1;
 }
 
 .subsection h3 {
@@ -1428,15 +1491,16 @@ button, input, select { font: inherit; color-scheme: dark; }
   height: 80px;
   border-radius: 0;
   background: var(--bg-alt);
-  border: 1px solid var(--border);
+  border: 1px solid rgba(0, 212, 255, 0.3);
   display: flex;
   align-items: center;
   justify-content: center;
   position: relative;
   overflow: hidden;
+  box-shadow: 0 0 10px rgba(0, 212, 255, 0.08);
 }
 
-.fortune-sticks { font-size: 1.4rem; animation: float 3s ease-in-out infinite; color: var(--accent); font-family: var(--serif); font-weight: 700; }
+.fortune-sticks { font-size: 1.4rem; animation: float 3s ease-in-out infinite; color: var(--neon-blue); font-family: var(--serif); font-weight: 700; text-shadow: 0 0 8px rgba(0, 212, 255, 0.3); }
 
 .fortune-stick-container.shaking .fortune-stick-tube { animation: shake 0.4s ease-in-out 3; }
 .fortune-stick-container.shaking .fortune-sticks { animation: stickBounce 0.3s ease-in-out 5; }
@@ -1537,19 +1601,22 @@ button, input, select { font: inherit; color-scheme: dark; }
   height: 84px;
   border-radius: 0;
   background: var(--bg-alt);
-  border: 1px solid var(--accent);
+  border: 1px solid rgba(178, 75, 243, 0.4);
   display: flex;
   align-items: center;
   justify-content: center;
   font-size: 1.2rem;
-  color: var(--accent);
-  box-shadow: none;
-  transition: opacity 0.2s;
+  color: var(--neon-purple);
+  box-shadow: 0 0 10px rgba(178, 75, 243, 0.08);
+  transition: box-shadow 0.3s, border-color 0.3s;
   font-family: var(--serif);
   font-weight: 600;
 }
 
-.tarot-card-back:hover { opacity: 0.85; }
+.tarot-card-back:hover {
+  border-color: var(--neon-purple);
+  box-shadow: 0 0 15px rgba(178, 75, 243, 0.15);
+}
 
 .tarot-deck-display.flipping .tarot-card-back {
   animation: cardFlip 0.6s ease-in-out infinite alternate;
@@ -1978,8 +2045,9 @@ button, input, select { font: inherit; color-scheme: dark; }
 }
 
 .vip-button:hover {
-  border-color: var(--accent);
-  color: var(--accent);
+  border-color: var(--neon-purple);
+  color: var(--neon-purple);
+  box-shadow: 0 0 12px rgba(178, 75, 243, 0.12);
 }
 
 /* ===== 支付弹窗 ===== */
@@ -2026,7 +2094,7 @@ button, input, select { font: inherit; color-scheme: dark; }
   border-radius: 0;
 }
 
-.pay-close-btn:hover { color: var(--text-primary); border-color: var(--accent); }
+.pay-close-btn:hover { color: var(--text-primary); border-color: var(--neon-blue); }
 
 .pay-header { text-align: center; margin-bottom: 20px; }
 .pay-icon { font-size: 2rem; margin-bottom: 8px; }
@@ -2058,11 +2126,12 @@ button, input, select { font: inherit; color-scheme: dark; }
   transition: border-color 0.15s;
 }
 
-.pay-plan:hover { border-color: var(--accent); }
+.pay-plan:hover { border-color: var(--neon-blue); }
 
 .pay-plan.active {
-  border-color: var(--accent);
-  background: var(--accent-dim);
+  border-color: var(--neon-blue);
+  background: rgba(0, 212, 255, 0.04);
+  box-shadow: 0 0 12px rgba(0, 212, 255, 0.08);
 }
 
 .pay-plan-tag {
@@ -2072,8 +2141,8 @@ button, input, select { font: inherit; color-scheme: dark; }
   padding: 2px 8px;
   font-size: 0.68rem;
   font-weight: 700;
-  background: var(--accent);
-  color: var(--bg);
+  background: var(--cyber-gradient);
+  color: #fff;
   border-radius: 0;
   letter-spacing: 0.03em;
 }
@@ -2185,7 +2254,7 @@ button, input, select { font: inherit; color-scheme: dark; }
 
 .chat-messages::-webkit-scrollbar { width: 4px; }
 .chat-messages::-webkit-scrollbar-track { background: transparent; }
-.chat-messages::-webkit-scrollbar-thumb { background: var(--border); }
+.chat-messages::-webkit-scrollbar-thumb { background: rgba(0, 212, 255, 0.2); }
 
 .chat-welcome {
   text-align: center;
@@ -2300,18 +2369,21 @@ button, input, select { font: inherit; color-scheme: dark; }
 .chat-send-btn {
   width: 40px;
   height: 40px;
-  border: 1px solid var(--accent);
-  background: var(--accent);
-  color: var(--bg);
+  border: 1px solid var(--neon-blue);
+  background: linear-gradient(135deg, rgba(0,212,255,0.2), rgba(178,75,243,0.12));
+  color: var(--neon-blue);
   cursor: pointer;
   display: flex;
   align-items: center;
   justify-content: center;
   flex-shrink: 0;
   border-radius: 0;
+  transition: box-shadow 0.3s;
 }
 
-.chat-send-btn:hover { opacity: 0.85; }
+.chat-send-btn:hover {
+  box-shadow: 0 0 12px rgba(0, 212, 255, 0.2);
+}
 .chat-send-btn:disabled { opacity: 0.4; cursor: not-allowed; }
 
 .chat-error {

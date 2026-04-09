@@ -6,7 +6,7 @@
     <meta name="apple-mobile-web-app-capable" content="yes" />
     <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent" />
     <meta name="format-detection" content="telephone=no" />
-    <title>五行紫微算命工具 · 深度版</title>
+    <title>古法推演神算</title>
     <link rel="preconnect" href="https://fonts.googleapis.com" />
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
     <link
@@ -16,11 +16,13 @@
     <link rel="stylesheet" href="./styles.css" />
   </head>
   <body>
+    <!-- 赛博朋克粒子背景 -->
+    <canvas id="cyber-particles"></canvas>
     <div class="page-shell">
       <header class="hero-card">
         <div>
           <p class="eyebrow">五行 · 八字 · 紫微 · 流年 · 深度测算</p>
-          <h1>五行紫微算命工具<span class="hero-version">深度版 v2</span></h1>
+          <h1>古法推演神算</h1>
           <p class="hero-copy">
             输入出生日期时刻，生成四柱八字、身强身弱、用神取法、十神格局、合冲刑害、
             神煞空亡、婚姻健康分析，结合流年流月给出全方位运势指导。
@@ -80,7 +82,7 @@
 
             <label class="input-group">
               <span>出生地</span>
-              <input id="birthplace" name="birthplace" type="text" maxlength="30" placeholder="例如：北京、广州、成都" />
+              <input id="birthplace" name="birthplace" type="text" maxlength="30" placeholder="例如：深圳、台北、高雄" />
             </label>
 
             <label class="input-group">
@@ -433,6 +435,91 @@
         <p class="pay-secure">安全支付 · 支付后即刻解锁</p>
       </div>
     </div>
+
+    <!-- 赛博朋克粒子背景动画 -->
+    <script>
+    (function() {
+      const canvas = document.getElementById('cyber-particles');
+      if (!canvas) return;
+      const ctx = canvas.getContext('2d');
+      let W, H, particles = [], mouse = { x: -999, y: -999 };
+      const PARTICLE_COUNT = 60;
+      const CONNECT_DIST = 120;
+
+      function resize() {
+        W = canvas.width = window.innerWidth;
+        H = canvas.height = window.innerHeight;
+      }
+      resize();
+      window.addEventListener('resize', resize);
+
+      document.addEventListener('mousemove', function(e) {
+        mouse.x = e.clientX;
+        mouse.y = e.clientY;
+      });
+
+      function Particle() {
+        this.x = Math.random() * W;
+        this.y = Math.random() * H;
+        this.vx = (Math.random() - 0.5) * 0.4;
+        this.vy = (Math.random() - 0.5) * 0.4;
+        this.r = Math.random() * 1.5 + 0.5;
+        this.color = Math.random() > 0.5 ? 'rgba(0,212,255,' : 'rgba(178,75,243,';
+      }
+
+      for (var i = 0; i < PARTICLE_COUNT; i++) {
+        particles.push(new Particle());
+      }
+
+      function draw() {
+        ctx.clearRect(0, 0, W, H);
+        for (var i = 0; i < particles.length; i++) {
+          var p = particles[i];
+          p.x += p.vx;
+          p.y += p.vy;
+          if (p.x < 0 || p.x > W) p.vx *= -1;
+          if (p.y < 0 || p.y > H) p.vy *= -1;
+
+          // 粒子
+          ctx.beginPath();
+          ctx.arc(p.x, p.y, p.r, 0, Math.PI * 2);
+          ctx.fillStyle = p.color + '0.5)';
+          ctx.fill();
+
+          // 连线
+          for (var j = i + 1; j < particles.length; j++) {
+            var p2 = particles[j];
+            var dx = p.x - p2.x, dy = p.y - p2.y;
+            var dist = Math.sqrt(dx * dx + dy * dy);
+            if (dist < CONNECT_DIST) {
+              var alpha = (1 - dist / CONNECT_DIST) * 0.15;
+              ctx.beginPath();
+              ctx.moveTo(p.x, p.y);
+              ctx.lineTo(p2.x, p2.y);
+              ctx.strokeStyle = 'rgba(0,212,255,' + alpha + ')';
+              ctx.lineWidth = 0.5;
+              ctx.stroke();
+            }
+          }
+
+          // 鼠标吸引
+          var dmx = mouse.x - p.x, dmy = mouse.y - p.y;
+          var mDist = Math.sqrt(dmx * dmx + dmy * dmy);
+          if (mDist < 150) {
+            var alpha2 = (1 - mDist / 150) * 0.2;
+            ctx.beginPath();
+            ctx.moveTo(p.x, p.y);
+            ctx.lineTo(mouse.x, mouse.y);
+            ctx.strokeStyle = 'rgba(178,75,243,' + alpha2 + ')';
+            ctx.lineWidth = 0.5;
+            ctx.stroke();
+          }
+        }
+        requestAnimationFrame(draw);
+      }
+      draw();
+    })();
+    </script>
 
     <script src="./bazi-core.js?v=20260408"></script>
     <script src="./script.js?v=20260408_v2"></script>
