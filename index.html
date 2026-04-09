@@ -20,20 +20,22 @@
       <header class="hero-card">
         <div>
           <p class="eyebrow">五行 · 八字 · 紫微 · 流年 · 深度测算</p>
-          <h1>五行紫微算命工具<span class="hero-version">深度版</span></h1>
+          <h1>五行紫微算命工具<span class="hero-version">深度版 v2</span></h1>
           <p class="hero-copy">
-            输入你的出生日期与时刻，生成四柱八字、紫微斗数命盘、纳音五行、十神关系、五行生克分析，
-            结合流年流月给出全方位运势指导与开运建议。
+            输入出生日期时刻，生成四柱八字、身强身弱、用神取法、十神格局、合冲刑害、
+            神煞空亡、婚姻健康分析，结合流年流月给出全方位运势指导。
           </p>
         </div>
         <div class="hero-badge-group">
           <span class="hero-badge">四柱排盘</span>
-          <span class="hero-badge">纳音五行</span>
-          <span class="hero-badge">十神分析</span>
-          <span class="hero-badge">流年运势</span>
+          <span class="hero-badge">身强身弱</span>
+          <span class="hero-badge">用神取法</span>
+          <span class="hero-badge">十神格局</span>
+          <span class="hero-badge">合冲刑害</span>
+          <span class="hero-badge">神煞空亡</span>
+          <span class="hero-badge">婚姻分析</span>
           <span class="hero-badge">紫微斗数</span>
-          <span class="hero-badge">流月指导</span>
-          <span class="hero-badge">开运建议</span>
+          <span class="hero-badge">流年运势</span>
           <span class="hero-badge">AI 问答</span>
         </div>
       </header>
@@ -123,6 +125,7 @@
                 <span id="dominant-pill" class="meta-pill"></span>
                 <span id="weak-pill" class="meta-pill subtle"></span>
               </div>
+              <div class="overall-conclusion" id="overall-conclusion"></div>
             </div>
 
             <!-- 四柱排盘 -->
@@ -146,10 +149,83 @@
             <!-- 五行分布 -->
             <section class="subsection">
               <div class="subsection-heading">
-                <h3>五行分布</h3>
-                <p>八字中的天干与地支各计一份，共计 8 份能量。最旺 / 最弱</p>
+                <h3>五行分布（加权）</h3>
+                <p>基于地支藏干权重的精确五行能量分布，月令（40分）为最强权重。</p>
               </div>
               <div id="element-bars" class="element-bars"></div>
+              <div id="element-summary" class="element-summary"></div>
+            </section>
+
+            <!-- 【新增】身强身弱 -->
+            <section class="subsection">
+              <div class="subsection-heading">
+                <h3>身强身弱判断</h3>
+                <p>综合四柱天干地支藏干权重，判断日主强弱七级。这是八字分析的根基。</p>
+              </div>
+              <div id="strength-section"></div>
+            </section>
+
+            <!-- 【新增】用神取法 -->
+            <section class="subsection">
+              <div class="subsection-heading">
+                <h3>用神取法</h3>
+                <p>根据身强身弱确定命局喜忌五行，指导趋吉避凶。</p>
+              </div>
+              <div id="usegod-section"></div>
+            </section>
+
+            <!-- 【新增】合冲刑害 -->
+            <section class="subsection">
+              <div class="subsection-heading">
+                <h3>合冲刑害分析</h3>
+                <p>天干五合四冲、地支六合三合三会、六冲三刑六害——揭示命局内部的动态关系。</p>
+              </div>
+              <div id="interaction-section"></div>
+            </section>
+
+            <!-- 【新增】格局判断 -->
+            <section class="subsection">
+              <div class="subsection-heading">
+                <h3>命局格局</h3>
+                <p>以月令为纲，结合十神分布判断八正格与特殊格局。</p>
+              </div>
+              <div id="pattern-section"></div>
+            </section>
+
+            <!-- 【新增】神煞系统 -->
+            <section class="subsection">
+              <div class="subsection-heading">
+                <h3>神煞星曜</h3>
+                <p>天乙贵人、文昌、驿马、桃花、华盖等神煞，揭示命中特殊禀赋。</p>
+              </div>
+              <div id="shensha-section"></div>
+            </section>
+
+            <!-- 【新增】空亡分析 -->
+            <section class="subsection">
+              <div class="subsection-heading">
+                <h3>空亡分析</h3>
+                <p>六十甲子旬中空亡，空则虚、虚则变。</p>
+              </div>
+              <div id="kongwang-section"></div>
+            </section>
+
+            <!-- 【新增】婚姻分析 -->
+            <section class="subsection">
+              <div class="subsection-heading">
+                <h3>婚姻感情分析</h3>
+                <p>以日支（夫妻宫）为核心，结合十神和冲害关系评估婚姻格局。</p>
+              </div>
+              <div id="marriage-section"></div>
+            </section>
+
+            <!-- 【新增】健康诊断 -->
+            <section class="subsection">
+              <div class="subsection-heading">
+                <h3>健康诊断</h3>
+                <p>五行对应五脏，分析忌神入脏、过旺过弱对健康的提示。</p>
+              </div>
+              <div id="health-section"></div>
             </section>
 
             <!-- 五行生克 -->
@@ -164,8 +240,8 @@
             <!-- 十神分析 -->
             <section class="subsection">
               <div class="subsection-heading">
-                <h3>十神分析</h3>
-                <p>以日干为主体，分析其他天干与日干的十神关系，揭示命局深层结构。</p>
+                <h3>十神深度分析</h3>
+                <p>以日干为主体，展示四柱天干与地支藏干的完整十神关系，分析十神能量分布与组合格局。</p>
               </div>
               <div id="tengod-section"></div>
             </section>
@@ -358,6 +434,7 @@
       </div>
     </div>
 
-    <script src="./script.js?v=20260320_fix2"></script>
+    <script src="./bazi-core.js?v=20260408"></script>
+    <script src="./script.js?v=20260408_v2"></script>
   </body>
 </html>

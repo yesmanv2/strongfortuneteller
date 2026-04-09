@@ -588,6 +588,362 @@ const MONTHLY_KEYWORDS = {
   正印: { keyword: "贵人", advice: "有人帮扶，适合求学和考试" },
 };
 
+/* ===== 十神柱位差异化含义 ===== */
+const TEN_GOD_PILLAR_MEANINGS = {
+  比肩: {
+    年柱: { meaning: "祖辈多兄弟姐妹，童年独立性强，早年靠自己打拼", tag: "自立" },
+    月柱: { meaning: "朋友多、社交广，事业上多竞争伙伴，适合合伙经营", tag: "社交" },
+    日支: { meaning: "配偶性格独立、有主见，婚姻中双方势均力敌", tag: "平等" },
+    时柱: { meaning: "子女独立能干，晚年朋友多但经济上需自力更生", tag: "自强" },
+  },
+  劫财: {
+    年柱: { meaning: "祖业难守或早年破财，兄弟姐妹间有竞争", tag: "争夺" },
+    月柱: { meaning: "事业竞争激烈，易因朋友破财，合作需慎选对象", tag: "防损" },
+    日支: { meaning: "配偶个性强势或花钱大方，婚姻中财务需协商", tag: "磨合" },
+    时柱: { meaning: "晚年花销较大，子女有魄力但可能让你操心经济", tag: "耗散" },
+  },
+  食神: {
+    年柱: { meaning: "祖辈福泽深厚，童年生活优渥，自幼才思敏捷", tag: "福泽" },
+    月柱: { meaning: "才华横溢、表达力强，适合创意、文化、餐饮行业", tag: "才华" },
+    日支: { meaning: "配偶温厚善良、懂生活情趣，家庭和睦有口福", tag: "温馨" },
+    时柱: { meaning: "子女聪慧有才艺，晚年安逸享福、生活有品质", tag: "安逸" },
+  },
+  伤官: {
+    年柱: { meaning: "少年叛逆、不服管教，与长辈有代沟但思维超前", tag: "叛逆" },
+    月柱: { meaning: "技术出众、创新力强，适合专业技术或自由职业领域", tag: "专精" },
+    日支: { meaning: "配偶才华横溢但个性尖锐，婚姻中需要包容与沟通", tag: "才子" },
+    时柱: { meaning: "子女有才但个性强，晚年追求精神层面的满足", tag: "求新" },
+  },
+  偏财: {
+    年柱: { meaning: "祖上经商或家境殷实，早年有意外财运或长辈馈赠", tag: "家底" },
+    月柱: { meaning: "人缘极佳、社交生财，适合销售、投资、商贸行业", tag: "人脉" },
+    日支: { meaning: "（男命）配偶温柔大方、会持家；异性缘佳但需守分寸", tag: "桃花" },
+    时柱: { meaning: "晚年财运亨通，子女孝顺且经济条件好", tag: "晚福" },
+  },
+  正财: {
+    年柱: { meaning: "家境务实稳定，自幼受勤俭家风熏陶，理财意识早", tag: "勤俭" },
+    月柱: { meaning: "事业稳健、收入稳定，适合金融、财务、实业等领域", tag: "稳健" },
+    日支: { meaning: "（男命）配偶贤惠持家、踏实可靠，家庭经济有保障", tag: "贤内" },
+    时柱: { meaning: "晚年积蓄丰厚，子女务实孝顺、经济独立", tag: "积蓄" },
+  },
+  七杀: {
+    年柱: { meaning: "童年管教严格或祖辈有军政背景，早年压力大但磨砺意志", tag: "磨砺" },
+    月柱: { meaning: "事业心极强、有领导力和魄力，适合管理、军警、法律", tag: "权威" },
+    日支: { meaning: "配偶能力强、有压迫感，婚姻中需互相尊重避免冲突", tag: "强势" },
+    时柱: { meaning: "子女有出息但管不住，晚年仍有事业追求和挑战", tag: "不歇" },
+  },
+  正官: {
+    年柱: { meaning: "家风端正、祖辈有社会地位，自幼受良好教育", tag: "家教" },
+    月柱: { meaning: "仕途光明、贵人多助，适合公务员、管理层、大企业", tag: "仕途" },
+    日支: { meaning: "（女命）丈夫正派有担当；（男命）自律性强、重视规矩", tag: "正派" },
+    时柱: { meaning: "子女品学兼优、有出息，晚年受人尊敬、名声好", tag: "声望" },
+  },
+  偏印: {
+    年柱: { meaning: "祖辈有特殊才能或非常规经历，童年环境较特殊", tag: "独特" },
+    月柱: { meaning: "悟性极高、直觉灵敏，适合研究、IT、玄学、中医", tag: "悟性" },
+    日支: { meaning: "配偶有独特才华但性格内敛，精神世界丰富", tag: "内秀" },
+    时柱: { meaning: "子女有特殊天赋，晚年转向修身养性、追求精神价值", tag: "修行" },
+  },
+  正印: {
+    年柱: { meaning: "家庭教育优良、母亲影响深远，自幼受呵护", tag: "庇荫" },
+    月柱: { meaning: "学业运佳、有贵人提携，适合教育、学术、文化行业", tag: "学术" },
+    日支: { meaning: "配偶仁慈包容、善解人意，家庭温馨和谐", tag: "慈爱" },
+    时柱: { meaning: "子女孝顺、学业好，晚年安享清福、衣食无忧", tag: "清福" },
+  },
+};
+
+/* ===== 十神组合解读 ===== */
+const TEN_GOD_COMBOS = [
+  { name: "官印相生", gods: ["正官", "正印"], quality: "吉",
+    desc: "官星生印星，官得印护、印得官引，仕途文凭两得意。命主既有管理能力又有学识修养，适合体制内或大企业担任要职。" },
+  { name: "杀印相生", gods: ["七杀", "正印"], quality: "吉",
+    desc: "七杀配印星，化压力为动力。命主在高压环境中反而能超常发挥，适合竞争激烈的高端领域，如法律、金融、军事。" },
+  { name: "食伤生财", gods: ["食神", "正财"], altGods: [["食神", "偏财"], ["伤官", "正财"], ["伤官", "偏财"]], quality: "吉",
+    desc: "才华转化为财富的黄金组合。命主靠技艺、创意、口才赚钱，事业与财运相辅相成，是自由职业者和创业者的最佳格局。" },
+  { name: "财官相生", gods: ["正财", "正官"], altGods: [["偏财", "正官"], ["正财", "七杀"]], quality: "吉",
+    desc: "以财养官、以官护财，财权兼得。命主既有经济基础又有社会地位，事业步步高升，适合经商从政两手发展。" },
+  { name: "伤官配印", gods: ["伤官", "正印"], quality: "吉",
+    desc: "才华配修养，刚柔并济。命主有过人才气又不失沉稳，在学术、艺术、技术领域能达到很高成就。" },
+  { name: "伤官见官", gods: ["伤官", "正官"], quality: "凶",
+    desc: "伤官克官，口舌是非之象。命主才高气傲容易得罪上司权贵，事业上需收敛锋芒、低调做人，否则招祸。" },
+  { name: "枭神夺食", gods: ["偏印", "食神"], quality: "凶",
+    desc: "偏印克食神，创意受阻。命主有才华却施展不开，容易起步后又中途而废。须防投资被骗、合作翻脸。" },
+  { name: "比劫夺财", gods: ["比肩", "正财"], altGods: [["劫财", "正财"], ["比肩", "偏财"], ["劫财", "偏财"]], quality: "凶",
+    desc: "兄弟争财之象，人际关系带来经济损失。命主不宜与人合伙经营、不宜借贷担保，理财需独立自主。" },
+  { name: "食神制杀", gods: ["食神", "七杀"], quality: "吉",
+    desc: "以食制杀、化敌为友。命主能巧妙化解压力和竞争，以智慧和才华征服对手。属于高层次的命格配置。" },
+  { name: "官杀混杂", gods: ["正官", "七杀"], quality: "凶",
+    desc: "正官与七杀齐现，号令不一、立场矛盾。命主在事业上容易左右为难、受多方牵制。需要合杀留官或合官留杀来化解。" },
+];
+
+/* ===== 十神五分类映射 ===== */
+const TEN_GOD_CATEGORIES = {
+  比肩: "比劫", 劫财: "比劫",
+  食神: "食伤", 伤官: "食伤",
+  偏财: "财星", 正财: "财星",
+  七杀: "官杀", 正官: "官杀",
+  偏印: "印星", 正印: "印星",
+};
+
+const CATEGORY_MEANINGS = {
+  比劫: { icon: "🤝", label: "比劫（自我·竞争）", desc: "代表自身力量、兄弟朋友和竞争能力。旺则人脉广、行动力强；过旺则刚愎自用、争财夺利。" },
+  食伤: { icon: "🎨", label: "食伤（才华·表达）", desc: "代表才华输出、创造力和口才。旺则才思敏捷、创意丰富；过旺则恃才傲物、桀骜不驯。" },
+  财星: { icon: "💰", label: "财星（财富·欲望）", desc: "代表财运、物质追求和异性缘（男命）。旺则财运亨通、生活富足；过旺则物欲重、劳碌奔波。" },
+  官杀: { icon: "👔", label: "官杀（事业·权力）", desc: "代表事业地位、管理能力和约束力。旺则有权有势、受人尊重；过旺则压力大、是非多。" },
+  印星: { icon: "🎓", label: "印星（学识·庇护）", desc: "代表学历、贵人、母亲和保护力量。旺则学识渊博、贵人运好；过旺则依赖心重、缺乏行动力。" },
+};
+
+/* ===== 十神深度分析生成 ===== */
+function generateTenGodAnalysis(ctx) {
+  const { completeTenGods, tenGods, pillars, dayStem, gender, strengthResult, usefulGod } = ctx;
+
+  // ① 四柱十神明细表（天干+藏干）
+  const pillarDetails = [];
+  const pillarNames = ["年柱", "月柱", "日柱", "时柱"];
+  pillars.forEach((p, i) => {
+    const name = pillarNames[i];
+    // 天干十神（日柱天干是日主本身）
+    let stemGod = null, stemMeaning = null;
+    if (i !== 2) {
+      stemGod = getTenGod(dayStem, p.stem);
+      const pillarKey = i === 0 ? "年柱" : i === 1 ? "月柱" : "时柱";
+      stemMeaning = TEN_GOD_PILLAR_MEANINGS[stemGod]?.[pillarKey] || null;
+    }
+    // 地支藏干十神
+    const hiddenGods = [];
+    if (BRANCH_HIDDEN_STEMS[p.branch]) {
+      BRANCH_HIDDEN_STEMS[p.branch].forEach((h, hIdx) => {
+        const god = getTenGod(dayStem, h.stem);
+        const label = hIdx === 0 ? "本气" : hIdx === 1 ? "中气" : "余气";
+        const pillarKey = i === 0 ? "年柱" : i === 1 ? "月柱" : i === 2 ? "日支" : "时柱";
+        const meaning = TEN_GOD_PILLAR_MEANINGS[god]?.[pillarKey] || null;
+        hiddenGods.push({ stem: h.stem, weight: h.weight, label, god, meaning, element: STEM_ELEMENTS[h.stem] });
+      });
+    }
+    pillarDetails.push({
+      name, stem: p.stem, branch: p.branch,
+      stemElement: p.stemElement, branchElement: p.branchElement,
+      stemGod, stemMeaning, hiddenGods, isDayPillar: i === 2,
+    });
+  });
+
+  // ② 十神能量分布（五大类统计）
+  const catScores = { 比劫: 0, 食伤: 0, 财星: 0, 官杀: 0, 印星: 0 };
+  const catGodDetails = { 比劫: [], 食伤: [], 财星: [], 官杀: [], 印星: [] };
+  completeTenGods.all.forEach(g => {
+    const cat = TEN_GOD_CATEGORIES[g.god];
+    if (cat) {
+      // 用权重：天干算1.0，本气0.6，中气0.3，余气0.1
+      const w = g.isHidden ? (g.hiddenLabel === "本气" ? 0.6 : g.hiddenLabel === "中气" ? 0.3 : 0.1) : 1.0;
+      catScores[cat] += w;
+      catGodDetails[cat].push(g);
+    }
+  });
+  const totalCatScore = Object.values(catScores).reduce((s, v) => s + v, 0);
+  const catDistribution = Object.entries(catScores)
+    .map(([cat, score]) => ({
+      cat, score: Math.round(score * 100) / 100,
+      pct: totalCatScore > 0 ? Math.round((score / totalCatScore) * 100) : 0,
+      info: CATEGORY_MEANINGS[cat],
+      gods: catGodDetails[cat],
+    }))
+    .sort((a, b) => b.score - a.score);
+
+  // ③ 十神组合检测
+  const presentGods = new Set(completeTenGods.all.map(g => g.god));
+  const detectedCombos = [];
+  TEN_GOD_COMBOS.forEach(combo => {
+    const mainMatch = combo.gods.every(g => presentGods.has(g));
+    if (mainMatch) {
+      detectedCombos.push(combo);
+      return;
+    }
+    if (combo.altGods) {
+      for (const alt of combo.altGods) {
+        if (alt.every(g => presentGods.has(g))) {
+          detectedCombos.push({ ...combo, matchedGods: alt });
+          return;
+        }
+      }
+    }
+  });
+
+  // ④ 十神总评文字
+  const dominantCat = catDistribution[0];
+  const weakestCat = catDistribution[catDistribution.length - 1];
+  let conclusion = "";
+  conclusion += `命盘十神以「${dominantCat.info.label.split("（")[0]}」为主导（占${dominantCat.pct}%），`;
+  conclusion += `${dominantCat.info.desc.split("。")[0]}。`;
+  if (weakestCat.pct <= 5) {
+    conclusion += `「${weakestCat.info.label.split("（")[0]}」几乎缺失（仅${weakestCat.pct}%），`;
+    conclusion += `${weakestCat.info.desc.split("；")[1]?.replace("过旺则", "不足则易") || "需后天补足"}。`;
+  }
+  if (detectedCombos.length > 0) {
+    const goodCombos = detectedCombos.filter(c => c.quality === "吉");
+    const badCombos = detectedCombos.filter(c => c.quality === "凶");
+    if (goodCombos.length > 0) {
+      conclusion += ` 命局形成「${goodCombos.map(c => c.name).join("」「")}」的吉利组合，${goodCombos[0].desc.split("。")[0]}。`;
+    }
+    if (badCombos.length > 0) {
+      conclusion += ` 同时需注意「${badCombos.map(c => c.name).join("」「")}」的不利组合，${badCombos[0].desc.split("。").slice(-2, -1)[0]}。`;
+    }
+  }
+  // 缺失十神提示
+  if (completeTenGods.absentGods.length > 0 && completeTenGods.absentGods.length <= 3) {
+    conclusion += ` 命局缺少${completeTenGods.absentGods.join("、")}，`;
+    const absentCats = [...new Set(completeTenGods.absentGods.map(g => TEN_GOD_CATEGORIES[g]))];
+    conclusion += `${absentCats.join("、")}能量需通过大运流年或后天努力来补充。`;
+  }
+
+  return { pillarDetails, catDistribution, detectedCombos, conclusion, absentGods: completeTenGods.absentGods, dominantGod: completeTenGods.dominantGod };
+}
+
+/* ===== 综合命格总评生成 ===== */
+function generateOverallConclusion(ctx) {
+  const {
+    name, gender, zodiac, dayElement, dominant, weak, balance,
+    strengthResult, usefulGod, pattern, shensha, interactions,
+    marriage, birthplaceAnalysis, regionInfo, profile,
+    weightedCounts, yearlyFortunes, currentYear,
+  } = ctx;
+
+  const sections = [];
+  const genderWord = gender === "male" ? "男" : "女";
+  const strengthWord = strengthResult.isStrong ? "偏旺" : "偏弱";
+
+  // ① 命格总论
+  let overviewText = `${name}命属${dayElement}，日主${strengthResult.label}（${strengthResult.strengthScore}分），`;
+  overviewText += `${strengthResult.monthStatus}。`;
+  overviewText += `八字中${dominant}气最旺（${Math.round(weightedCounts[dominant])}分），${weak}气最弱（${Math.round(weightedCounts[weak])}分）`;
+  const zeroElements = ELEMENTS.filter(e => weightedCounts[e] < 2);
+  if (zeroElements.length > 0) {
+    overviewText += `，${zeroElements.join("、")}几近缺失`;
+  }
+  overviewText += `。格局为${pattern.mainPattern.name}`;
+  if (pattern.hasSpecial) {
+    overviewText += `，兼有${pattern.specialPatterns.map(s => s.name).join("、")}`;
+  }
+  overviewText += `——${pattern.mainPattern.brief}。`;
+  overviewText += `整体来看，此命${strengthResult.isStrong ? "精力充沛、主观意识强，适合主导型角色" : "性情温润、善于协作，适合借力借势发展"}。`;
+  sections.push({ heading: "🔮 命格总论", text: overviewText });
+
+  // ② 核心优势与短板
+  let strengthText = "";
+  // 优势
+  const goodShensha = shensha.filter(s => s.type === "吉");
+  const goodInteractions = (interactions.stemCombines.length + interactions.branchCombines.length + interactions.branchThreeCombines.length);
+  strengthText += `【天赋优势】`;
+  strengthText += `${dominant}气充沛赋予${name}${profile.copy.split("。")[0]}。`;
+  if (goodShensha.length > 0) {
+    strengthText += `命带${goodShensha.map(s => s.name).join("、")}，${goodShensha[0].desc}。`;
+  }
+  if (goodInteractions > 0) {
+    strengthText += `四柱合局${goodInteractions > 2 ? "丰富" : "有利"}，人际贵人运${goodInteractions > 2 ? "极佳" : "不错"}。`;
+  }
+  // 短板
+  strengthText += ` 【需要注意】`;
+  strengthText += `${weak}偏弱提示在${WEAK_ELEMENT_ADVICE[weak].brief.split("，")[0]}方面需要后天补足。`;
+  const badInteractions = (interactions.branchClashes.length + interactions.branchPunishes.length + interactions.branchHarms.length);
+  if (badInteractions > 0) {
+    strengthText += `四柱存在${interactions.branchClashes.length ? "六冲" : ""}${interactions.branchPunishes.length ? "三刑" : ""}${interactions.branchHarms.length ? "六害" : ""}，`;
+    strengthText += `人生中可能有阶段性波动，但只要把握好节奏，波动反而是跃升的契机。`;
+  }
+  sections.push({ heading: "⚡ 核心优势与短板", text: strengthText });
+
+  // ③ 用神与人生策略
+  let strategyText = `此命取"${usefulGod.useGod}（${usefulGod.useGodElement}）"为用神，核心策略为「${usefulGod.strategy}」。`;
+  strategyText += `喜${usefulGod.likeElements.join("、")}，忌${usefulGod.dislikeElements.join("、")}。`;
+  strategyText += `在职业选择上宜向${usefulGod.useGodElement}相关行业靠拢——${profile.career}`;
+  strategyText += ` 日常生活中，多接触${usefulGod.useGodElement}属性的颜色（${DOMINANT_PROFILE[usefulGod.useGodElement]?.lucky?.color || profile.lucky.color}）、方位（${DOMINANT_PROFILE[usefulGod.useGodElement]?.lucky?.direction || profile.lucky.direction}），`;
+  strategyText += `能持续为命格注入正向能量。`;
+  sections.push({ heading: "🎯 用神与人生策略", text: strategyText });
+
+  // ④ 感情与婚姻概览
+  if (marriage) {
+    let marriageText = `婚姻格局评分 ${marriage.score} 分（${marriage.rating}）。`;
+    marriageText += marriage.factors.slice(0, 3).join("；") + "。";
+    marriageText += ` ${marriage.conclusion.split("。").slice(0, 2).join("。")}。`;
+    sections.push({ heading: "💕 感情与婚姻", text: marriageText });
+  }
+
+  // ⑤ 流年走势概览
+  const thisYearFortune = yearlyFortunes.find(yf => yf.year === currentYear);
+  const nextYearFortune = yearlyFortunes.find(yf => yf.year === currentYear + 1);
+  const bestYears = [...yearlyFortunes].sort((a, b) => b.score - a.score).slice(0, 3);
+  const worstYears = [...yearlyFortunes].sort((a, b) => a.score - b.score).slice(0, 2);
+  let yearlyText = "";
+  if (thisYearFortune) {
+    yearlyText += `${currentYear}年为${thisYearFortune.god}之年（综合${thisYearFortune.score}分），${thisYearFortune.desc}`;
+  }
+  if (nextYearFortune) {
+    yearlyText += ` ${currentYear + 1}年转入${nextYearFortune.god}（${nextYearFortune.score}分），${nextYearFortune.desc}`;
+  }
+  yearlyText += ` 在2015-2030年间，最旺的年份为${bestYears.map(y => `${y.year}年（${y.score}分）`).join("、")}，`;
+  yearlyText += `需多加留意的年份为${worstYears.map(y => `${y.year}年（${y.score}分）`).join("、")}。`;
+  yearlyText += `总体节奏：${bestYears[0].score - worstYears[0].score > 25 ? "起伏较大，要善用高峰期、稳过低谷期" : "波动适中，稳步前进即可"}。`;
+  sections.push({ heading: "📅 流年走势概览", text: yearlyText });
+
+  // ⑥ 综合寄语
+  let closingText = `综合而言，${name}的命盘${balance <= 5 ? "五行较为均衡，是难得的稳健格局" : `${dominant}旺${weak}弱，特长鲜明`}。`;
+  closingText += `${pattern.mainPattern.name}${pattern.hasSpecial ? "配合" + pattern.specialPatterns[0].name : ""}的格局，`;
+  closingText += `${strengthResult.isStrong
+    ? "赋予了命主充沛的行动力和主导权，事业上宜大胆开拓，但也要学会倾听和退让"
+    : "决定了命主需要善借外力、以柔克刚，在合适的平台和团队中更能绽放光芒"}。`;
+  closingText += ` 命理是参考而非定论——善用天赋、补足短板、顺应时势，方能行稳致远。`;
+  sections.push({ heading: "✨ 总评寄语", text: closingText });
+
+  return sections;
+}
+
+/* ===== 五行分布文字总结生成 ===== */
+function generateElementSummary(ctx) {
+  const { weightedCounts, dominant, weak, dayElement, strengthResult, usefulGod } = ctx;
+
+  const items = [];
+  const total = Object.values(weightedCounts).reduce((s, v) => s + v, 0);
+  const sorted = Object.entries(weightedCounts).sort((a, b) => b[1] - a[1]);
+
+  // 偏旺分析
+  const strongEl = sorted[0];
+  const pct = total > 0 ? Math.round((strongEl[1] / total) * 100) : 0;
+  if (pct >= 40) {
+    items.push({ type: "warn", icon: "🔥", text: `${strongEl[0]}气独大（占${pct}%），能量过于集中，需要${ELEMENT_GENERATE[strongEl[0]]}（泄）或${ELEMENT_OVERCOME_BY[strongEl[0]]}（克）来制衡。` });
+  } else if (pct >= 30) {
+    items.push({ type: "info", icon: "📊", text: `${strongEl[0]}气偏旺（占${pct}%），是命盘的主导力量，${DOMINANT_PROFILE[strongEl[0]]?.copy.split("。")[0] || ""}。` });
+  } else {
+    items.push({ type: "good", icon: "✅", text: `五行分布相对均匀，最旺的${strongEl[0]}也仅占${pct}%，属于难得的均衡格局。` });
+  }
+
+  // 偏弱/缺失分析
+  const weakElements = sorted.filter(([el, score]) => score < 5);
+  if (weakElements.length > 0) {
+    const weakNames = weakElements.map(([el, score]) => `${el}（${Math.round(score)}分）`).join("、");
+    items.push({ type: "warn", icon: "⚠️", text: `${weakNames}严重偏弱${weakElements.some(([_, s]) => s < 1) ? "甚至近乎缺失" : ""}，对应的身体和运势领域需重点关注和后天补足。` });
+  }
+
+  // 日主与五行关系
+  const dayScore = weightedCounts[dayElement];
+  const dayPct = total > 0 ? Math.round((dayScore / total) * 100) : 0;
+  if (dayPct >= 25) {
+    items.push({ type: "good", icon: "💪", text: `日主${dayElement}在五行中占比${dayPct}%，${strengthResult.label}，自身能量充足，行事有主见、有底气。` });
+  } else if (dayPct >= 15) {
+    items.push({ type: "info", icon: "⚖️", text: `日主${dayElement}占比${dayPct}%，${strengthResult.label}，需借助${ELEMENT_GENERATED_BY[dayElement]}（印星）来增强自身气场。` });
+  } else {
+    items.push({ type: "warn", icon: "🛡️", text: `日主${dayElement}仅占${dayPct}%，自身能量薄弱，宜找靠山、入大平台，避免独自扛压。` });
+  }
+
+  // 喜忌对照
+  const likeScore = usefulGod.likeElements.reduce((s, el) => s + (weightedCounts[el] || 0), 0);
+  const dislikeScore = usefulGod.dislikeElements.reduce((s, el) => s + (weightedCounts[el] || 0), 0);
+  if (likeScore >= dislikeScore) {
+    items.push({ type: "good", icon: "🎉", text: `喜用神五行（${usefulGod.likeElements.join("、")}）总能量${Math.round(likeScore)}分 ≥ 忌神（${usefulGod.dislikeElements.join("、")}）${Math.round(dislikeScore)}分，先天格局对你有利。` });
+  } else {
+    items.push({ type: "info", icon: "🔄", text: `忌神五行（${usefulGod.dislikeElements.join("、")}）能量${Math.round(dislikeScore)}分偏强于喜用（${usefulGod.likeElements.join("、")}）${Math.round(likeScore)}分，后天补足更为关键。` });
+  }
+
+  return items;
+}
+
 /* ===== 重点关注模块 ===== */
 const FOCUS_GUIDE = {
   overall: {
@@ -845,20 +1201,17 @@ function calculateFortune({ name, gender, birth, focus, birthplace }) {
     { label: "时柱", meaning: "晚近追求与潜在愿景", ...hourPillar },
   ];
 
-  // 五行计数
+  // 【升级】五行加权计数（替代旧的简单8份计数）
+  const weightedCounts = getWeightedElementCounts(pillars);
+  // 保留旧的简单计数用于向后兼容
   const counts = ELEMENTS.reduce((acc, el) => { acc[el] = 0; return acc; }, {});
-  pillars.forEach((p) => {
-    counts[p.stemElement] += 1;
-    counts[p.branchElement] += 1;
-  });
+  pillars.forEach((p) => { counts[p.stemElement] += 1; counts[p.branchElement] += 1; });
 
-  const ranked = ELEMENTS.map((el) => ({ element: el, count: counts[el] }))
+  const ranked = ELEMENTS.map((el) => ({ element: el, count: weightedCounts[el] }))
     .sort((a, b) => b.count - a.count);
-  const dominantCount = ranked[0].count;
-  const weakCount = ranked[ranked.length - 1].count;
-  const dominant = ranked.filter(i => i.count === dominantCount).map(i => i.element)[0];
-  const weak = ranked.filter(i => i.count === weakCount).map(i => i.element)[0];
-  const balance = dominantCount - weakCount;
+  const dominant = ranked[0].element;
+  const weak = ranked[ranked.length - 1].element;
+  const balance = Math.round(ranked[0].count - ranked[ranked.length - 1].count);
 
   // 纳音
   const yearNayinIndex = getGanzhiIndex(yearPillar.stem, yearPillar.branch);
@@ -866,15 +1219,50 @@ function calculateFortune({ name, gender, birth, focus, birthplace }) {
   const yearNayin = NAYIN_TABLE[yearNayinIndex];
   const dayNayin = NAYIN_TABLE[dayNayinIndex];
 
-  // 十神
+  // 【升级】身强身弱判断
+  const dayElement = STEM_ELEMENTS[dayPillar.stem];
+  const strengthResult = calculateDayMasterStrength(pillars, dayPillar.stem);
+
+  // 【升级】用神取法
+  const usefulGod = determineUsefulGod(strengthResult, dayPillar.stem);
+
+  // 【升级】完整十神（含地支藏干）
+  const completeTenGods = getCompleteTenGods(pillars, dayPillar.stem);
+
+  // 旧十神保留向后兼容
   const tenGods = [
     { pillar: "年柱", stem: yearPillar.stem, god: getTenGod(dayPillar.stem, yearPillar.stem) },
     { pillar: "月柱", stem: monthPillar.stem, god: getTenGod(dayPillar.stem, monthPillar.stem) },
     { pillar: "时柱", stem: hourPillar.stem, god: getTenGod(dayPillar.stem, hourPillar.stem) },
   ];
 
+  // 【升级】十神深度分析
+  const tenGodAnalysis = generateTenGodAnalysis({
+    completeTenGods, tenGods, pillars, dayStem: dayPillar.stem, gender, strengthResult, usefulGod,
+  });
+
+  // 【升级】格局判断
+  const pattern = determinePattern(pillars, dayPillar.stem, strengthResult, completeTenGods);
+
+  // 【升级】合冲刑害分析
+  const interactions = analyzeInteractions(pillars);
+
+  // 【升级】神煞系统
+  const shensha = analyzeShensha(pillars, dayPillar.stem);
+
+  // 【升级】空亡分析
+  const kongwang = analyzeKongWang(pillars);
+
+  // 【升级】称骨算命
+  const chenggu = calculateChenggu(pillars, birth, gender);
+
+  // 【升级】婚姻分析
+  const marriage = analyzeMarriage(pillars, dayPillar.stem, gender, strengthResult);
+
+  // 【升级】健康诊断
+  const health = analyzeHealth(weightedCounts, usefulGod);
+
   // 五行生克分析
-  const dayElement = STEM_ELEMENTS[dayPillar.stem];
   const wuxingRelations = {
     generates: ELEMENT_GENERATE[dayElement],
     overcomes: ELEMENT_OVERCOME[dayElement],
@@ -882,7 +1270,7 @@ function calculateFortune({ name, gender, birth, focus, birthplace }) {
     overcomeBy: ELEMENT_OVERCOME_BY[dayElement],
   };
 
-  // 流年分析（固定展示 2015-2030）
+  // 流年分析
   const currentYear = new Date().getFullYear();
   const yearlyFocusYear = Math.min(Math.max(currentYear, YEARLY_RANGE_START), YEARLY_RANGE_END);
   const yearlyBadgeText = currentYear < YEARLY_RANGE_START ? "起始" : currentYear > YEARLY_RANGE_END ? "最近" : "当前";
@@ -895,23 +1283,14 @@ function calculateFortune({ name, gender, birth, focus, birthplace }) {
     const careerInfluence = YEARLY_CAREER_INFLUENCE[dayElement]?.[yElement] || { score: 65, desc: "事业平稳" };
     const yNayinIdx = getGanzhiIndex(yPillar.stem, yPillar.branch);
     yearlyFortunes.push({
-      year: y,
-      stem: yPillar.stem,
-      branch: yPillar.branch,
-      element: yElement,
-      nayin: NAYIN_TABLE[yNayinIdx],
-      score: influence.score,
-      desc: influence.desc,
-      wealthScore: wealthInfluence.score,
-      wealthDesc: wealthInfluence.desc,
-      careerScore: careerInfluence.score,
-      careerDesc: careerInfluence.desc,
-      god: getTenGod(dayPillar.stem, yPillar.stem),
-      isCurrent: y === yearlyFocusYear,
+      year: y, stem: yPillar.stem, branch: yPillar.branch, element: yElement, nayin: NAYIN_TABLE[yNayinIdx],
+      score: influence.score, desc: influence.desc, wealthScore: wealthInfluence.score, wealthDesc: wealthInfluence.desc,
+      careerScore: careerInfluence.score, careerDesc: careerInfluence.desc,
+      god: getTenGod(dayPillar.stem, yPillar.stem), isCurrent: y === yearlyFocusYear,
     });
   }
 
-  // 流月分析 (当前年12个月)
+  // 流月分析
   const monthlyFortunes = [];
   const monthNames = ["寅月·立春", "卯月·惊蛰", "辰月·清明", "巳月·立夏", "午月·芒种", "未月·小暑",
     "申月·立秋", "酉月·白露", "戌月·寒露", "亥月·立冬", "子月·大雪", "丑月·小寒"];
@@ -919,94 +1298,64 @@ function calculateFortune({ name, gender, birth, focus, birthplace }) {
   for (let m = 0; m < 12; m++) {
     const mStem = getMonthStem(currentYearPillar.stem, m);
     const mBranch = BRANCHES[(2 + m) % 12];
-    const mElement = STEM_ELEMENTS[mStem];
     const god = getTenGod(dayPillar.stem, mStem);
     const info = MONTHLY_KEYWORDS[god] || { keyword: "平稳", advice: "顺其自然，保持平常心" };
-    monthlyFortunes.push({
-      month: m + 1,
-      name: monthNames[m],
-      stem: mStem,
-      branch: mBranch,
-      element: mElement,
-      god,
-      keyword: info.keyword,
-      advice: info.advice,
-    });
+    monthlyFortunes.push({ month: m + 1, name: monthNames[m], stem: mStem, branch: mBranch, element: STEM_ELEMENTS[mStem], god, keyword: info.keyword, advice: info.advice });
   }
 
-  const summaryTitle = `${name}的五行命盘`;
-  
   // 出生地分析
   const regionInfo = matchBirthplace(birthplace);
   let birthplaceAnalysis = null;
-  if (regionInfo) {
-    birthplaceAnalysis = analyzeBirthplaceInfluence(regionInfo, dayElement, dominant, weak, counts);
-  }
-  
-  // 优化总览文案——更丰富专业
-  const birthTimeStr = `${birth.getFullYear()}年${birth.getMonth() + 1}月${birth.getDate()}日${birth.getHours()}时`;
-  const zodiacBranch = yearPillar.branch;
-  const zodiacMap = { 子: "鼠", 丑: "牛", 寅: "虎", 卯: "兔", 辰: "龙", 巳: "蛇", 午: "马", 未: "羊", 申: "猴", 酉: "鸡", 戌: "狗", 亥: "猪" };
-  const zodiac = zodiacMap[zodiacBranch] || "";
-  
-  const zeroElements = ELEMENTS.filter(e => counts[e] === 0);
-  const strongElements = ELEMENTS.filter(e => counts[e] >= 3);
-  
-  let summaryCopy = "";
-  if (balance <= 1) {
-    summaryCopy = `${name}，${birthTimeStr}生人，属${zodiac}，日主${dayPillar.stem}${dayPillar.branch}（${dayElement}），纳音"${dayNayin}"——${NAYIN_DESCRIPTIONS[dayNayin] || ""}。\n\n八字五行分布较为均衡，这是非常难得的格局。主线气质偏向"${dominant}"，兼具各方面的发展潜力。`;
-  } else {
-    summaryCopy = `${name}，${birthTimeStr}生人，属${zodiac}，日主${dayPillar.stem}${dayPillar.branch}（${dayElement}），纳音"${dayNayin}"——${NAYIN_DESCRIPTIONS[dayNayin] || ""}。\n\n命盘呈现"${dominant}旺${weak}弱"格局，${dominant}能量${counts[dominant]}份占主导，优势突出、特点鲜明。`;
-  }
-  
-  if (zeroElements.length > 0) {
-    summaryCopy += `\n注意：八字完全缺${zeroElements.join("、")}，需重点通过后天努力补足。`;
-  }
-  if (strongElements.length > 0) {
-    summaryCopy += `\n${strongElements.join("、")}力量充沛（${strongElements.map(e => e + counts[e] + "份").join("、")}），天赋优势明显。`;
-  }
-  if (birthplaceAnalysis) {
-    summaryCopy += `\n出生于${regionInfo.city}（${regionInfo.element}），地域气场与命格${birthplaceAnalysis.harmonyLabel}。`;
-  }
+  if (regionInfo) birthplaceAnalysis = analyzeBirthplaceInfluence(regionInfo, dayElement, dominant, weak, counts);
 
+  // 【升级】总览文案
+  const birthTimeStr = `${birth.getFullYear()}年${birth.getMonth() + 1}月${birth.getDate()}日${birth.getHours()}时`;
+  const zodiacMap = { 子: "鼠", 丑: "牛", 寅: "虎", 卯: "兔", 辰: "龙", 巳: "蛇", 午: "马", 未: "羊", 申: "猴", 酉: "鸡", 戌: "狗", 亥: "猪" };
+  const zodiac = zodiacMap[yearPillar.branch] || "";
+
+  let summaryCopy = `${name}，${birthTimeStr}生人，属${zodiac}，日主${dayPillar.stem}${dayPillar.branch}（${dayElement}），纳音"${dayNayin}"——${NAYIN_DESCRIPTIONS[dayNayin] || ""}。`;
+  summaryCopy += `\n\n【身强身弱】日主${strengthResult.label}（${strengthResult.strengthScore}分），${strengthResult.monthStatus}。${strengthResult.desc}`;
+  summaryCopy += `\n【用神】${usefulGod.strategy}——喜${usefulGod.likeElements.join("、")}，忌${usefulGod.dislikeElements.join("、")}。`;
+  summaryCopy += `\n【格局】${pattern.mainPattern.name}——${pattern.mainPattern.desc}`;
+  if (pattern.hasSpecial) summaryCopy += `，兼有${pattern.specialPatterns.map(s => s.name).join("、")}`;
+  summaryCopy += `。`;
+  if (shensha.length > 0) summaryCopy += `\n【神煞】命带${shensha.map(s => s.name).join("、")}。`;
+  if (birthplaceAnalysis) summaryCopy += `\n出生于${regionInfo.city}（${regionInfo.element}），地域气场${birthplaceAnalysis.harmonyLabel}。`;
+
+  const summaryTitle = `${name}的命盘深度解析`;
   const focusSection = FOCUS_GUIDE[focus] || FOCUS_GUIDE.overall;
   const profile = DOMINANT_PROFILE[dominant];
   const weakAdvice = WEAK_ELEMENT_ADVICE[weak];
 
-  // 紫微斗数
+  // 【新增】综合命格总评（多段落深度评语）
+  const overallConclusion = generateOverallConclusion({
+    name, gender, zodiac, dayElement, dominant, weak, balance,
+    strengthResult, usefulGod, pattern, shensha, interactions,
+    marriage, birthplaceAnalysis, regionInfo, profile,
+    weightedCounts, yearlyFortunes, currentYear: new Date().getFullYear(),
+  });
+
+  // 【新增】五行分布文字总结
+  const elementSummary = generateElementSummary({
+    weightedCounts, dominant, weak, dayElement, strengthResult, usefulGod,
+  });
   const ziwei = calculateZiwei(birth);
 
   return {
-    name,
-    birth,
-    birthplace,
-    birthplaceAnalysis,
-    regionInfo,
-    pillars,
-    counts,
-    dominant,
-    weak,
-    balance,
-    dayElement,
-    dayStem: dayPillar.stem,
-    dayBranch: dayPillar.branch,
-    yearNayin,
-    dayNayin,
-    summaryTitle,
-    summaryCopy,
+    name, birth, gender, birthplace, birthplaceAnalysis, regionInfo,
+    pillars, counts, weightedCounts, dominant, weak, balance, dayElement,
+    dayStem: dayPillar.stem, dayBranch: dayPillar.branch, yearNayin, dayNayin,
+    summaryTitle, summaryCopy, overallConclusion, elementSummary,
+    // 新增数据
+    strengthResult, usefulGod, completeTenGods, tenGodAnalysis, pattern, interactions,
+    shensha, kongwang, marriage, health,
+    // 兼容旧数据
     personality: profile,
     balanceTitle: `${weak}元素补足方案`,
     balanceCopy: weakAdvice.brief + "\n" + weakAdvice.detail,
     focusTitle: focusSection.title,
     focusCopy: focusSection.template(dominant, weak, balance, counts),
-    tenGods,
-    wuxingRelations,
-    yearlyFortunes,
-    yearlyBadgeText,
-    monthlyFortunes,
-    currentYear,
-    ziwei,
-    zodiac,
+    tenGods, wuxingRelations, yearlyFortunes, yearlyBadgeText, monthlyFortunes, currentYear, ziwei, zodiac,
   };
 }
 
@@ -1020,6 +1369,18 @@ function renderResult(result) {
     if (summaryCopyNode) summaryCopyNode.textContent = result.summaryCopy;
     if (dominantNode) dominantNode.textContent = `主导：${result.dominant}`;
     if (weakNode) weakNode.textContent = `待补：${result.weak}`;
+
+    // 【新增】综合命格总评
+    const overallConclusionNode = document.querySelector("#overall-conclusion");
+    if (overallConclusionNode && result.overallConclusion) {
+      overallConclusionNode.innerHTML = result.overallConclusion.map(section => `
+        <div class="conclusion-block">
+          <h4 class="conclusion-heading">${section.heading}</h4>
+          <p class="conclusion-text">${section.text}</p>
+        </div>
+      `).join("");
+    }
+
     if (personalityTitle) personalityTitle.textContent = result.personality.title;
     if (personalityCopy) personalityCopy.textContent = result.personality.copy;
     if (balanceTitle) balanceTitle.textContent = result.balanceTitle;
@@ -1044,12 +1405,13 @@ function renderResult(result) {
     `).join("");
   }
 
-  // 五行分布
+  // 五行分布（使用加权数据）
   if (elementBars) {
+    const maxW = Math.max(...ELEMENTS.map(el => result.weightedCounts[el]));
     elementBars.innerHTML = ELEMENTS.map((el) => {
-      const count = result.counts[el];
+      const wScore = Math.round(result.weightedCounts[el]);
       const [fillStart, fillEnd] = ELEMENT_STYLES[el];
-      const width = `${Math.max((count / 8) * 100, 8)}%`;
+      const width = `${Math.max((wScore / (maxW || 1)) * 100, 8)}%`;
       const tag = el === result.dominant ? " ▲" : el === result.weak ? " ▽" : "";
       return `
         <div class="element-row">
@@ -1057,10 +1419,24 @@ function renderResult(result) {
           <div class="element-track">
             <div class="element-fill" style="--fill-width: ${width}; --fill-start: ${fillStart}; --fill-end: ${fillEnd};"></div>
           </div>
-          <span class="element-value">${count}/8</span>
-        </div>
-      `;
+          <span class="element-count">${wScore}分</span>
+        </div>`;
     }).join("");
+  }
+
+  // 【新增】五行分布文字总结
+  const elementSummaryNode = document.querySelector("#element-summary");
+  if (elementSummaryNode && result.elementSummary) {
+    elementSummaryNode.innerHTML = `
+      <div class="element-summary-content">
+        ${result.elementSummary.map(item => `
+          <div class="element-summary-item ${item.type}">
+            <span class="es-icon">${item.icon}</span>
+            <span class="es-text">${item.text}</span>
+          </div>
+        `).join("")}
+      </div>
+    `;
   }
 
   // 纳音显示
@@ -1082,27 +1458,273 @@ function renderResult(result) {
     `;
   }
 
-  // 十神分析
+  // 【新增】身强身弱
+  const strengthSection = document.querySelector("#strength-section");
+  if (strengthSection && result.strengthResult) {
+    const s = result.strengthResult;
+    const pct = s.strengthScore;
+    const barColor = pct >= 50 ? "var(--accent-primary, #6366f1)" : "var(--accent-secondary, #f59e0b)";
+    strengthSection.innerHTML = `
+      <div class="strength-card">
+        <div class="strength-meter">
+          <div class="strength-labels"><span>从弱</span><span>均衡</span><span>从强</span></div>
+          <div class="strength-track"><div class="strength-fill" style="width:${pct}%;background:${barColor}"></div><div class="strength-pointer" style="left:${pct}%"><span class="strength-score">${pct}</span></div></div>
+        </div>
+        <div class="strength-info">
+          <div class="strength-badge ${s.isStrong ? 'strong' : 'weak'}">${s.label}</div>
+          <span class="strength-month">${s.monthStatus}</span>
+        </div>
+        <p class="strength-desc">${s.desc}</p>
+        <div class="strength-detail"><span>帮扶力量 ${s.helpScore}分</span><span>耗泄力量 ${s.drainScore}分</span></div>
+        <div class="module-conclusion"><p>${s.conclusion}</p></div>
+      </div>`;
+  }
+
+  // 【新增】用神取法
+  const usegodSection = document.querySelector("#usegod-section");
+  if (usegodSection && result.usefulGod) {
+    const u = result.usefulGod;
+    usegodSection.innerHTML = `
+      <div class="usegod-card">
+        <div class="usegod-header">
+          <div class="usegod-main"><span class="usegod-label">用神</span><span class="usegod-value">${u.useGod}（${u.useGodElement}）</span></div>
+          <div class="usegod-strategy">${u.strategy}</div>
+        </div>
+        <p class="usegod-desc">${u.useGodDesc}</p>
+        <div class="usegod-elements">
+          <div class="usegod-like"><strong>喜：</strong>${u.likeElements.map(e=>`<span class="el-tag like">${e}</span>`).join("")}</div>
+          <div class="usegod-dislike"><strong>忌：</strong>${u.dislikeElements.map(e=>`<span class="el-tag dislike">${e}</span>`).join("")}</div>
+        </div>
+        <div class="module-conclusion"><p>${u.advice}</p></div>
+      </div>`;
+  }
+
+  // 【新增】合冲刑害
+  const interactionSection = document.querySelector("#interaction-section");
+  if (interactionSection && result.interactions) {
+    const it = result.interactions;
+    let items = "";
+    if (it.stemCombines.length) items += it.stemCombines.map(c => `<div class="ix-item combine"><span class="ix-icon">🤝</span><span class="ix-pair">${c.pair}</span><span class="ix-name">${c.name}→化${c.result}</span></div>`).join("");
+    if (it.stemClashes.length) items += it.stemClashes.map(c => `<div class="ix-item clash"><span class="ix-icon">⚡</span><span class="ix-pair">${c.pair}</span><span class="ix-name">${c.desc}</span></div>`).join("");
+    if (it.branchCombines.length) items += it.branchCombines.map(c => `<div class="ix-item combine"><span class="ix-icon">💫</span><span class="ix-pair">${c.pair}</span><span class="ix-name">${c.name}</span></div>`).join("");
+    if (it.branchThreeCombines.length) items += it.branchThreeCombines.map(c => `<div class="ix-item three-combine"><span class="ix-icon">🔮</span><span class="ix-name">${c.label}：${c.name}</span></div>`).join("");
+    if (it.branchThreeMeets.length) items += it.branchThreeMeets.map(c => `<div class="ix-item three-meet"><span class="ix-icon">🌐</span><span class="ix-name">${c.name}</span></div>`).join("");
+    if (it.branchClashes.length) items += it.branchClashes.map(c => `<div class="ix-item clash"><span class="ix-icon">💥</span><span class="ix-pair">${c.pair}</span><span class="ix-name">${c.name}</span></div>`).join("");
+    if (it.branchPunishes.length) items += it.branchPunishes.map(p => `<div class="ix-item punish"><span class="ix-icon">⚠️</span><span class="ix-name">${p.name}</span><span class="ix-desc">${p.desc}</span></div>`).join("");
+    if (it.branchHarms.length) items += it.branchHarms.map(h => `<div class="ix-item harm"><span class="ix-icon">🔻</span><span class="ix-pair">${h.pair}</span><span class="ix-name">${h.name}</span></div>`).join("");
+    if (!items) items = `<div class="ix-item none"><span class="ix-icon">✅</span><span class="ix-name">四柱无明显合冲刑害</span></div>`;
+    let summaryHtml = it.summary.length ? `<div class="ix-summary">${it.summary.join("。")}。</div>` : "";
+    interactionSection.innerHTML = `<div class="ix-grid">${items}</div>${summaryHtml}`;
+  }
+
+  // 【新增】格局判断
+  const patternSection = document.querySelector("#pattern-section");
+  if (patternSection && result.pattern) {
+    const pt = result.pattern;
+    let specialsHtml = "";
+    if (pt.hasSpecial) specialsHtml = `<div class="pattern-specials"><h4>特殊格局</h4>${pt.specialPatterns.map(s => `<div class="pattern-sp-item"><span class="pattern-sp-name">${s.name}</span><span class="pattern-sp-desc">${s.desc}</span></div>`).join("")}</div>`;
+    patternSection.innerHTML = `
+      <div class="pattern-card">
+        <div class="pattern-main">
+          <div class="pattern-name">${pt.mainPattern.name}</div>
+          <div class="pattern-god">月令本气十神：${pt.monthMainGod}</div>
+        </div>
+        <p class="pattern-brief">${pt.mainPattern.brief}</p>
+        <p class="pattern-desc">${pt.mainPattern.desc}</p>
+        ${specialsHtml}
+        <div class="module-conclusion"><p>${pt.patternConclusion}</p></div>
+      </div>`;
+  }
+
+  // 称骨算命已移除展示
+  // const chengguSection = document.querySelector("#chenggu-section");
+
+  // 【新增】神煞系统
+  const shenshaSection = document.querySelector("#shensha-section");
+  if (shenshaSection && result.shensha) {
+    const ss = result.shensha;
+    if (ss.length > 0) {
+      shenshaSection.innerHTML = `<div class="shensha-grid">${ss.map(s => `
+        <div class="shensha-badge ${s.type}">
+          <span class="shensha-icon">${s.icon}</span>
+          <span class="shensha-name">${s.name}</span>
+          <span class="shensha-type">${s.type}</span>
+          <p class="shensha-desc">${s.desc}</p>
+        </div>`).join("")}</div>`;
+    } else {
+      shenshaSection.innerHTML = `<div class="shensha-empty">四柱未见明显神煞</div>`;
+    }
+  }
+
+  // 【新增】空亡分析
+  const kongwangSection = document.querySelector("#kongwang-section");
+  if (kongwangSection && result.kongwang) {
+    const kw = result.kongwang;
+    let posHtml = "";
+    if (kw.hasKongWang) {
+      posHtml = kw.kongPositions.map(k => `<div class="kw-pos"><span class="kw-pillar">${k.pillar}</span><span class="kw-branch">${k.branch}</span><span class="kw-meaning">${k.meaning}</span></div>`).join("");
+    }
+    kongwangSection.innerHTML = `
+      <div class="kongwang-card">
+        <div class="kw-header"><span class="kw-label">空亡</span><span class="kw-value">${kw.kongWang.join("、")}</span></div>
+        ${posHtml ? `<div class="kw-positions">${posHtml}</div>` : ""}
+        <p class="kw-desc">${kw.desc}</p>
+      </div>`;
+  }
+
+  // 【新增】婚姻分析
+  const marriageSection = document.querySelector("#marriage-section");
+  if (marriageSection && result.marriage) {
+    const mg = result.marriage;
+    const scoreColor = mg.score >= 75 ? "#22c55e" : mg.score >= 55 ? "#f59e0b" : "#ef4444";
+    marriageSection.innerHTML = `
+      <div class="marriage-card">
+        <div class="marriage-header">
+          <div class="marriage-score-circle" style="--score-color:${scoreColor}">
+            <span class="marriage-score-num">${mg.score}</span>
+            <span class="marriage-score-label">分</span>
+          </div>
+          <div class="marriage-rating">${mg.rating}</div>
+        </div>
+        <div class="marriage-factors">${mg.factors.map(f => `<div class="marriage-factor"><span class="mf-dot"></span>${f}</div>`).join("")}</div>
+        <div class="module-conclusion"><p>${mg.conclusion}</p></div>
+      </div>`;
+  }
+
+  // 【新增】健康诊断
+  const healthSection = document.querySelector("#health-section");
+  if (healthSection && result.health) {
+    const hl = result.health;
+    if (hl.warnings.length > 0) {
+      healthSection.innerHTML = `<div class="health-warnings">${hl.warnings.map(w => `
+        <div class="health-warn-item">
+          <div class="hw-header"><span class="hw-element">${w.element}</span><span class="hw-organ">${w.organ}</span></div>
+          <p class="hw-desc">${w.desc}</p>
+          <p class="hw-illness">注意：${w.illness}</p>
+          <p class="hw-nurture">${w.nurture}</p>
+        </div>`).join("")}</div>
+        <div class="module-conclusion"><p>${hl.summary}</p></div>`;
+    } else {
+      healthSection.innerHTML = `<div class="health-good"><span>✅</span> ${hl.summary}</div>`;
+    }
+  }
+
+  // 十神分析（升级版）
   const tenGodSection = document.querySelector("#tengod-section");
-  if (tenGodSection) {
-    tenGodSection.innerHTML = `
-      <div class="tengod-grid">
-        ${result.tenGods.map((tg) => {
-          const info = TEN_GOD_MEANINGS[tg.god] || { icon: "", brief: "—", detail: "—" };
-          return `
-            <div class="tengod-card">
-              <div class="tengod-header">
-                <div>
-                  <h4>${tg.pillar}：${tg.god}</h4>
-                  <span class="tengod-brief">${info.brief}</span>
+  if (tenGodSection && result.tenGodAnalysis) {
+    const tga = result.tenGodAnalysis;
+    const elStyles = ELEMENT_STYLES;
+
+    // ① 四柱十神明细表
+    const pillarTableHTML = tga.pillarDetails.map(pd => {
+      const stemGodInfo = pd.stemGod ? (TEN_GOD_MEANINGS[pd.stemGod] || {}) : {};
+      return `
+        <div class="tga-pillar-card${pd.isDayPillar ? " tga-day-pillar" : ""}">
+          <div class="tga-pillar-head">
+            <span class="tga-pillar-name">${pd.name}</span>
+            <span class="tga-ganzhi" style="color:${elStyles[pd.stemElement]?.[0] || "var(--text-primary)"}">${pd.stem}</span><span class="tga-ganzhi" style="color:${elStyles[pd.branchElement]?.[0] || "var(--text-primary)"}">${pd.branch}</span>
+          </div>
+          ${pd.isDayPillar ? `<div class="tga-stem-god tga-day-master"><span class="tga-god-badge">日主</span><span class="tga-god-meaning">命主本人 · ${pd.stemElement}</span></div>` : `
+          <div class="tga-stem-god">
+            <span class="tga-god-badge ${stemGodInfo.icon ? "" : "no-icon"}">${stemGodInfo.icon || ""} ${pd.stemGod}</span>
+            <span class="tga-god-brief">${stemGodInfo.brief || ""}</span>
+          </div>
+          ${pd.stemMeaning ? `<p class="tga-pillar-meaning"><span class="tga-tag">${pd.stemMeaning.tag}</span>${pd.stemMeaning.meaning}</p>` : ""}
+          `}
+          <div class="tga-hidden-gods">
+            ${pd.hiddenGods.map(hg => {
+              const hInfo = TEN_GOD_MEANINGS[hg.god] || {};
+              return `
+                <div class="tga-hidden-item">
+                  <span class="tga-hidden-label">${hg.label}</span>
+                  <span class="tga-hidden-stem" style="color:${elStyles[hg.element]?.[0] || "var(--text-primary)"}">${hg.stem}(${hg.element})</span>
+                  <span class="tga-hidden-god">${hg.god}</span>
+                  ${hg.meaning ? `<span class="tga-hidden-meaning">${hg.meaning.tag}</span>` : ""}
+                </div>`;
+            }).join("")}
+          </div>
+        </div>`;
+    }).join("");
+
+    // ② 十神能量分布（五类柱状图）
+    const maxCatPct = Math.max(...tga.catDistribution.map(c => c.pct), 1);
+    const catBarsHTML = tga.catDistribution.map(c => {
+      const barW = Math.max((c.pct / maxCatPct) * 100, 4);
+      const catColors = { 比劫: "#e8a87c", 食伤: "#7ec8e3", 财星: "#f0c75e", 官杀: "#c49bbb", 印星: "#82c99a" };
+      const color = catColors[c.cat] || "var(--accent)";
+      return `
+        <div class="tga-cat-row">
+          <div class="tga-cat-label">${c.info.icon} ${c.cat}</div>
+          <div class="tga-cat-bar-wrap">
+            <div class="tga-cat-bar" style="width:${barW}%;background:${color}"></div>
+          </div>
+          <div class="tga-cat-pct">${c.pct}%</div>
+        </div>`;
+    }).join("");
+
+    // 能量分布文字分析
+    const catAnalysisItems = [];
+    const topCat = tga.catDistribution[0];
+    const btmCat = tga.catDistribution[tga.catDistribution.length - 1];
+    if (topCat.pct >= 35) {
+      catAnalysisItems.push({ type: "info", icon: topCat.info.icon, text: `${topCat.cat}（${topCat.pct}%）占主导地位：${topCat.info.desc}` });
+    }
+    if (btmCat.pct <= 8) {
+      catAnalysisItems.push({ type: "warn", icon: "⚠️", text: `${btmCat.cat}（${btmCat.pct}%）严重不足：${btmCat.info.desc.split("；")[1]?.replace("过旺则", "不足则") || "需要后天补足。"}` });
+    }
+    if (tga.absentGods.length > 0) {
+      catAnalysisItems.push({ type: "warn", icon: "🔍", text: `命局缺少${tga.absentGods.join("、")}，相关领域的能量需通过大运流年来激活。` });
+    }
+    const catAnalysisHTML = catAnalysisItems.length > 0 ? `
+      <div class="tga-cat-analysis">
+        ${catAnalysisItems.map(item => `
+          <div class="tga-cat-analysis-item ${item.type}">
+            <span class="tga-cai-icon">${item.icon}</span>
+            <span class="tga-cai-text">${item.text}</span>
+          </div>`).join("")}
+      </div>` : "";
+
+    // ③ 十神组合解读
+    let combosHTML = "";
+    if (tga.detectedCombos.length > 0) {
+      combosHTML = `
+        <div class="tga-combos">
+          <h4 class="tga-sub-title">⚡ 十神组合</h4>
+          <div class="tga-combo-grid">
+            ${tga.detectedCombos.map(c => `
+              <div class="tga-combo-card ${c.quality === "吉" ? "combo-good" : "combo-bad"}">
+                <div class="tga-combo-head">
+                  <span class="tga-combo-name">${c.name}</span>
+                  <span class="tga-combo-quality ${c.quality === "吉" ? "q-good" : "q-bad"}">${c.quality}</span>
                 </div>
-              </div>
-              <p class="tengod-detail">${info.detail}</p>
-            </div>
-          `;
-        }).join("")}
-      </div>
-    `;
+                <p class="tga-combo-desc">${c.desc}</p>
+              </div>`).join("")}
+          </div>
+        </div>`;
+    }
+
+    // ④ 综合总评
+    const conclusionHTML = `
+      <div class="tga-conclusion">
+        <h4 class="tga-sub-title">📝 十神总评</h4>
+        <p class="tga-conclusion-text">${tga.conclusion}</p>
+      </div>`;
+
+    // 组装完整 HTML
+    tenGodSection.innerHTML = `
+      <div class="tga-wrapper">
+        <h4 class="tga-sub-title">📋 四柱十神明细</h4>
+        <p class="tga-sub-desc">天干为外在表现，地支藏干为内在潜能。日柱天干为日主本身。</p>
+        <div class="tga-pillar-grid">${pillarTableHTML}</div>
+
+        <h4 class="tga-sub-title">📊 十神能量分布</h4>
+        <p class="tga-sub-desc">十神归为比劫、食伤、财星、官杀、印星五大类，反映命格核心特质。</p>
+        <div class="tga-cat-bars">${catBarsHTML}</div>
+        ${catAnalysisHTML}
+
+        ${combosHTML}
+        ${conclusionHTML}
+      </div>`;
   }
 
   // 五行生克
