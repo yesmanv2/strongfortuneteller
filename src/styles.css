@@ -3861,7 +3861,6 @@ body::after { opacity: 0.5; }
 @media (max-width: 720px) {
   .p2-tabs { gap: 6px; padding: 10px 6px; overflow-x: auto; flex-wrap: nowrap; scrollbar-width: none; }
   .p2-tabs::-webkit-scrollbar { display: none; }
-  .p2-tabs::before { font-size: 10px; padding: 2px 8px; }
   .p2-tab-btn { padding: 9px 14px; font-size: 13px; flex-shrink: 0; }
 }
 
